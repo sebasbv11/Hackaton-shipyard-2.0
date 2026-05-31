@@ -1,0 +1,25 @@
+{
+  "name": "Manta: Travesía por Jocay",
+  "short_name": "Manta Jocay",
+  "description": "Videojuego sobre la cultura manteña y la bahía de Manta, Ecuador",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#0a2540",
+  "theme_color": "#0a2540",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

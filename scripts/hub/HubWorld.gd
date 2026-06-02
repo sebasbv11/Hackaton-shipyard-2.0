@@ -1,6 +1,7 @@
 extends Node2D
 
 const GameData = preload("res://scripts/data/GameData.gd")
+const PlayerSpriteClass = preload("res://scripts/characters/Player.gd")
 const SCREEN := Vector2(720, 1280)
 const PLAYER_SPEED := 300.0
 const INTERACT_DISTANCE := 92.0
@@ -22,9 +23,11 @@ var prompt_label: Label
 var interact_button: Button
 var exit_button: Button
 var move_buttons := {}
+var player_sprite: RefCounted = null
 
 func _ready() -> void:
 	randomize()
+	player_sprite = PlayerSpriteClass.new()
 	_build_ui()
 	_show_hub_text()
 	set_process(true)
@@ -48,11 +51,8 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"):
-		if current_minigame:
-			current_minigame.action()
-		else:
-			_try_interact()
+	if event.is_action_pressed("ui_accept") and not current_minigame:
+		_try_interact()
 	if event.is_action_pressed("ui_cancel") and current_minigame:
 		current_minigame.cancel()
 
@@ -61,6 +61,7 @@ func _process_exploration(delta: float) -> void:
 	var axis := _keyboard_axis() + touch_axis
 	if axis.length() > 1.0:
 		axis = axis.normalized()
+	player_sprite.update(delta, axis)
 
 	player_pos += axis * PLAYER_SPEED * delta
 	player_pos.x = clamp(player_pos.x, 70.0, SCREEN.x - 70.0)
@@ -404,6 +405,9 @@ func _draw_all_boats() -> void:
 
 
 func _draw_player() -> void:
+	if player_sprite:
+		player_sprite.draw(self, player_pos)
+		return
 	draw_rect(Rect2(player_pos.x - 18, player_pos.y + 0, 36, 40), Color("#e76f51"))
 	draw_rect(Rect2(player_pos.x - 12, player_pos.y + 40, 10, 24), Color("#264653"))
 	draw_rect(Rect2(player_pos.x + 2, player_pos.y + 40, 10, 24), Color("#264653"))

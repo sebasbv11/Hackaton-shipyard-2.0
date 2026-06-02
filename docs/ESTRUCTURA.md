@@ -31,6 +31,19 @@ Responsabilidades:
 - Recompensa de cada minijuego.
 - Texto del evento final.
 
+## Personaje
+
+Archivo:
+
+- `scripts/characters/Player.gd`
+
+Responsabilidades:
+
+- Cargar la hoja de sprites del personaje placeholder.
+- Seleccionar frames por direccion: abajo, arriba, izquierda y derecha.
+- Avanzar la animacion cuando el jugador se mueve.
+- Dibujar el frame actual en el hub.
+
 ## Minijuegos
 
 Base compartida:

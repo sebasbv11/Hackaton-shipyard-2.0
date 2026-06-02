@@ -7,6 +7,7 @@ var projectile := {}
 var aim_angle := -PI / 2.0
 var popped := 0
 var shots := 18
+var next_color := Color("#48cae4")
 
 func _ready() -> void:
 	title = "Minijuego 2: Silla U Bubble"
@@ -14,6 +15,7 @@ func _ready() -> void:
 	objective = "Dispara burbujas y libera simbolos de la Silla U Mantena."
 	reward = "Silla U Mantena"
 	_build_bubble_wall()
+	_pick_next_color()
 	set_process(true)
 
 
@@ -49,8 +51,9 @@ func action() -> void:
 	projectile = {
 		"pos": Vector2(360, 1095),
 		"vel": dir * 620.0,
-		"color": BUBBLE_COLORS[popped % BUBBLE_COLORS.size()]
+		"color": next_color
 	}
+	_pick_next_color()
 
 
 func _build_bubble_wall() -> void:
@@ -66,6 +69,13 @@ func _build_bubble_wall() -> void:
 
 func _hit_bubble(index: int) -> void:
 	var hit_color: Color = bubbles[index]["color"]
+	var projectile_color: Color = projectile["color"]
+	if projectile_color != hit_color:
+		projectile = {}
+		if shots <= 0:
+			failed.emit()
+		return
+
 	var to_remove := []
 	for i in range(bubbles.size()):
 		if bubbles[i]["color"] == hit_color and bubbles[i]["pos"].distance_to(bubbles[index]["pos"]) < 132.0:
@@ -88,6 +98,10 @@ func _miss_shot() -> void:
 		failed.emit()
 
 
+func _pick_next_color() -> void:
+	next_color = BUBBLE_COLORS[randi_range(0, BUBBLE_COLORS.size() - 1)]
+
+
 func _draw() -> void:
 	_draw_ocean_background()
 	_draw_text(Vector2(28, 42), title, 31, Color("#f4e4bc"))
@@ -103,6 +117,8 @@ func _draw() -> void:
 	var aim_end := shooter + Vector2(cos(aim_angle), sin(aim_angle)) * 155.0
 	draw_line(shooter, aim_end, Color("#f4e4bc"), 5)
 	draw_circle(shooter, 30, Color("#e76f51"))
+	draw_circle(Vector2(610, 1095), 24, next_color)
+	_draw_text(Vector2(565, 1140), "Siguiente", 16, Color("#f4e4bc"))
 	if projectile:
 		draw_circle(projectile["pos"], 22, projectile["color"])
 

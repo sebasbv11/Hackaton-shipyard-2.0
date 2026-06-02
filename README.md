@@ -14,9 +14,11 @@ Este repositorio ahora prioriza Godot. La version web/Capacitor fue eliminada pa
 - `scenes/hub/`: escena principal del muelle de Manta.
 - `scenes/minigames/`: escenas separadas para cada minijuego.
 - `scripts/hub/`: logica de exploracion, barcos, recompensas y evento final.
+- `scripts/characters/`: animacion y dibujo del personaje.
 - `scripts/minigames/`: logica base y scripts especificos de minijuegos.
 - `scripts/data/`: datos centrales del juego.
 - `docs/`: guias de estructura y exportacion movil.
+- `assets/placeholders/`: sprites temporales solo para demo interna.
 
 ## Minijuegos
 
@@ -38,4 +40,4 @@ Este repositorio ahora prioriza Godot. La version web/Capacitor fue eliminada pa
 3. Elige esta carpeta.
 4. Ejecuta la escena principal.
 
-El siguiente trabajo visual recomendado es crear sprites reales: personaje, muelle, playa, barcos pesqueros, astillero, Spondylus, Silla U Mantena y recompensas.
+El siguiente trabajo visual recomendado es reemplazar placeholders por sprites propios: personaje, muelle, playa, barcos pesqueros, astillero, Spondylus, Silla U Mantena y recompensas.

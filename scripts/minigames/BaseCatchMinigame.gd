@@ -26,8 +26,12 @@ var items: Array[Dictionary] = []
 var external_axis := Vector2.ZERO
 var banner := ""
 var banner_time := 0.0
+var impact_pos := Vector2.ZERO
+var impact_time := 0.0
+var explosion_texture: Texture2D = null
 
 func _ready() -> void:
+	explosion_texture = _load_image_texture("res://assets/placeholders/effects/explosion_placeholder.png")
 	set_process(true)
 
 
@@ -48,6 +52,8 @@ func _process(delta: float) -> void:
 		banner_time -= delta
 		if banner_time <= 0.0:
 			banner = ""
+	if impact_time > 0.0:
+		impact_time -= delta
 
 	var axis := _input_axis().x + external_axis.x
 	player_x = clamp(player_x + axis * 430.0 * delta, 75.0, SCREEN.x - 75.0)
@@ -98,6 +104,8 @@ func _collect_item(item: Dictionary) -> void:
 			completed.emit(reward)
 	else:
 		lives -= 1
+		impact_pos = item["pos"]
+		impact_time = 0.45
 		_show_banner("Cuidado con " + bad_label)
 		if lives <= 0:
 			failed.emit()
@@ -132,6 +140,8 @@ func _draw() -> void:
 	if banner != "":
 		draw_rect(Rect2(80, 610, 560, 80), Color(0, 0, 0, 0.72))
 		_draw_text(Vector2(110, 662), banner, 23, Color("#f4e4bc"))
+	if impact_time > 0.0:
+		_draw_explosion(impact_pos, impact_time)
 
 
 func _draw_ocean_background() -> void:
@@ -172,3 +182,26 @@ func _draw_ellipse(rect: Rect2, color: Color) -> void:
 
 func _draw_polygon(points: Array, color: Color) -> void:
 	draw_polygon(PackedVector2Array(points), PackedColorArray([color]))
+
+
+func _draw_explosion(pos: Vector2, time_left: float) -> void:
+	if explosion_texture == null:
+		draw_circle(pos, 36, Color("#f4a261"))
+		draw_circle(pos, 20, Color("#e76f51"))
+		return
+	var total_frames := 15
+	var frame: int = clampi(int((0.45 - time_left) / 0.45 * total_frames), 0, total_frames - 1)
+	var cell := Vector2(72, 100)
+	var source := Rect2((frame % 6) * cell.x, 18 + int(frame / 6) * cell.y, cell.x, cell.y)
+	draw_texture_rect_region(
+		explosion_texture,
+		Rect2(pos.x - 44, pos.y - 58, 88, 88),
+		source
+	)
+
+
+func _load_image_texture(path: String) -> Texture2D:
+	var image := Image.load_from_file(path)
+	if image == null:
+		return null
+	return ImageTexture.create_from_image(image)

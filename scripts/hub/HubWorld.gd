@@ -70,7 +70,7 @@ func _process_exploration(delta: float) -> void:
 		prompt_label.text = "Toca Interactuar para unir las 4 piezas en EL ASTILLERO"
 
 	if current_boat >= 0:
-	var boat: Dictionary = GameData.BOATS[current_boat]
+		var boat: Dictionary = GameData.BOATS[current_boat]
 		var done := completed.has(current_boat)
 		prompt_label.text = "%s - %s\n%s" % [
 			boat["name"],
@@ -317,7 +317,7 @@ func _draw_beach_symbols() -> void:
 func _draw_astillero() -> void:
 	draw_rect(Rect2(465, 895, 185, 180), Color("#6c757d"))
 	draw_rect(Rect2(490, 845, 135, 62), Color("#495057"))
-	draw_polygon([Vector2(465, 895), Vector2(555, 825), Vector2(650, 895)], [Color("#343a40")])
+	_draw_polygon([Vector2(465, 895), Vector2(555, 825), Vector2(650, 895)], Color("#343a40"))
 	draw_rect(Rect2(495, 955, 52, 80), Color("#212529"))
 	draw_rect(Rect2(568, 955, 52, 80), Color("#212529"))
 	_draw_text(Vector2(482, 914), "EL ASTILLERO", 22, Color("#f4e4bc"))
@@ -336,7 +336,7 @@ func _draw_all_boats() -> void:
 		_draw_ellipse(Rect2(pos.x - 70, pos.y - 24, 140, 48), Color("#5c3d1e"))
 		_draw_ellipse(Rect2(pos.x - 62, pos.y - 32, 124, 48), col)
 		draw_rect(Rect2(pos.x - 4, pos.y - 84, 8, 72), Color("#f4e4bc"))
-		draw_polygon([pos + Vector2(6, -78), pos + Vector2(6, -20), pos + Vector2(45, -20)], [Color("#ffffff")])
+		_draw_polygon([pos + Vector2(6, -78), pos + Vector2(6, -20), pos + Vector2(45, -20)], Color("#ffffff"))
 
 		if done:
 			draw_circle(pos + Vector2(52, -42), 18, Color("#2a9d8f"))
@@ -362,7 +362,7 @@ func _draw_final_ship() -> void:
 	_draw_ellipse(Rect2(ship_pos.x - 125, ship_pos.y - 35, 250, 70), Color("#5c3d1e"))
 	_draw_ellipse(Rect2(ship_pos.x - 105, ship_pos.y - 55, 210, 70), Color("#48cae4"))
 	draw_rect(Rect2(ship_pos.x - 5, ship_pos.y - 160, 10, 130), Color("#f4e4bc"))
-	draw_polygon([ship_pos + Vector2(8, -152), ship_pos + Vector2(8, -45), ship_pos + Vector2(90, -45)], [Color("#ffffff")])
+	_draw_polygon([ship_pos + Vector2(8, -152), ship_pos + Vector2(8, -45), ship_pos + Vector2(90, -45)], Color("#ffffff"))
 	_draw_text(ship_pos + Vector2(-70, 20), "BARCO JOCAY", 22, Color("#f4e4bc"))
 
 
@@ -382,4 +382,8 @@ func _draw_ellipse(rect: Rect2, color: Color) -> void:
 	for i in range(32):
 		var angle := TAU * float(i) / 32.0
 		points.append(center + Vector2(cos(angle) * radius.x, sin(angle) * radius.y))
-	draw_polygon(points, [color])
+	draw_polygon(points, PackedColorArray([color]))
+
+
+func _draw_polygon(points: Array, color: Color) -> void:
+	draw_polygon(PackedVector2Array(points), PackedColorArray([color]))

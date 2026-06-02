@@ -17,7 +17,6 @@ Este repositorio ahora prioriza Godot. La version web/Capacitor fue eliminada pa
 - `scripts/minigames/`: logica base y scripts especificos de minijuegos.
 - `scripts/data/`: datos centrales del juego.
 - `docs/`: guias de estructura y exportacion movil.
-- `icons/`: iconos del proyecto/app.
 
 ## Minijuegos
 
@@ -39,4 +38,4 @@ Este repositorio ahora prioriza Godot. La version web/Capacitor fue eliminada pa
 3. Elige esta carpeta.
 4. Ejecuta la escena principal.
 
-El siguiente trabajo visual recomendado es reemplazar los dibujos por sprites reales: personaje, muelle, playa, barcos pesqueros, astillero, Spondylus, Silla U Mantena y recompensas.
+El siguiente trabajo visual recomendado es crear sprites reales: personaje, muelle, playa, barcos pesqueros, astillero, Spondylus, Silla U Mantena y recompensas.

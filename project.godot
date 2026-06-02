@@ -1,5 +1,10 @@
 ; Engine configuration file.
-; Edit with Godot 4.6 or newer.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
 
 config_version=5
 
@@ -8,15 +13,13 @@ config_version=5
 config/name="Manta: El Astillero"
 run/main_scene="res://scenes/hub/HubWorld.tscn"
 config/features=PackedStringArray("4.6", "Mobile")
-config/icon="res://icons/icon-192.png"
-
 [display]
 
 window/size/viewport_width=720
 window/size/viewport_height=1280
-window/handheld/orientation=1
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/handheld/orientation=1
 
 [rendering]
 

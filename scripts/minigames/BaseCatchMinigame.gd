@@ -154,4 +154,8 @@ func _draw_ellipse(rect: Rect2, color: Color) -> void:
 	for i in range(32):
 		var angle := TAU * float(i) / 32.0
 		points.append(center + Vector2(cos(angle) * radius.x, sin(angle) * radius.y))
-	draw_polygon(points, [color])
+	draw_polygon(points, PackedColorArray([color]))
+
+
+func _draw_polygon(points: Array, color: Color) -> void:
+	draw_polygon(PackedVector2Array(points), PackedColorArray([color]))

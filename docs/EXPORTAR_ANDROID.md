@@ -15,7 +15,7 @@
 5. Configura:
    - Nombre: `Manta: El Astillero`
    - Orientacion: portrait
-   - Icono: `icons/icon-192.png` o un icono nuevo de mayor calidad
+   - Icono: agrega uno nuevo cuando exista una identidad visual final
 6. Exporta APK para pruebas.
 
 ## Recomendaciones moviles

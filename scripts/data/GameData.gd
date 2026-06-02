@@ -21,7 +21,7 @@ static var BOATS := [
 		"color": Color("#2a9d8f"),
 		"position": Vector2(520, 585),
 		"scene": "res://scenes/minigames/Minigame2Balsa.tscn",
-		"brief": "Recupera memoria ancestral de las balsas mantenas."
+		"brief": "Bubble shooter con simbolos de la Silla U Mantena."
 	},
 	{
 		"id": "spondylus",
@@ -32,7 +32,7 @@ static var BOATS := [
 		"color": Color("#e76f51"),
 		"position": Vector2(145, 805),
 		"scene": "res://scenes/minigames/Minigame3Spondylus.tscn",
-		"brief": "Atrapa conchas Spondylus entre las olas."
+		"brief": "Surfea olas de Manta y recoge conchas Spondylus."
 	},
 	{
 		"id": "astillero",
@@ -43,7 +43,7 @@ static var BOATS := [
 		"color": Color("#48cae4"),
 		"position": Vector2(555, 820),
 		"scene": "res://scenes/minigames/Minigame4Astillero.tscn",
-		"brief": "Repara piezas del barco para preparar la zarpada."
+		"brief": "Puzzle de reparacion naval en El Astillero."
 	}
 ]
 

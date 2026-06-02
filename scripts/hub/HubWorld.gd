@@ -48,8 +48,11 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept") and not current_minigame:
-		_try_interact()
+	if event.is_action_pressed("ui_accept"):
+		if current_minigame:
+			current_minigame.action()
+		else:
+			_try_interact()
 	if event.is_action_pressed("ui_cancel") and current_minigame:
 		current_minigame.cancel()
 
@@ -134,7 +137,13 @@ func _start_minigame(index: int) -> void:
 	reward_label.visible = false
 	prompt_label.visible = false
 	interact_button.visible = false
+	interact_button.text = "Accion"
+	interact_button.position = Vector2(350, 1160)
+	interact_button.size = Vector2(145, 64)
+	interact_button.visible = true
 	exit_button.visible = true
+	exit_button.position = Vector2(530, 1160)
+	exit_button.size = Vector2(125, 64)
 	_set_all_move_buttons_visible(false)
 	move_buttons["left"].visible = true
 	move_buttons["right"].visible = true
@@ -164,6 +173,9 @@ func _end_minigame() -> void:
 	reward_label.visible = true
 	prompt_label.visible = true
 	interact_button.visible = true
+	interact_button.text = "Interactuar"
+	interact_button.position = Vector2(470, 1160)
+	interact_button.size = Vector2(185, 64)
 	exit_button.visible = false
 	_set_all_move_buttons_visible(true)
 	_show_hub_text()
@@ -213,7 +225,7 @@ func _build_ui() -> void:
 	interact_button.text = "Interactuar"
 	interact_button.position = Vector2(470, 1160)
 	interact_button.size = Vector2(185, 64)
-	interact_button.pressed.connect(_try_interact)
+	interact_button.pressed.connect(_on_interact_button_pressed)
 	layer.add_child(interact_button)
 
 	exit_button = Button.new()
@@ -260,6 +272,13 @@ func _set_all_move_buttons_visible(visible: bool) -> void:
 		button.visible = visible
 
 
+func _on_interact_button_pressed() -> void:
+	if current_minigame:
+		current_minigame.action()
+	else:
+		_try_interact()
+
+
 func _draw() -> void:
 	if current_minigame:
 		return
@@ -274,12 +293,7 @@ func _draw() -> void:
 
 
 func _draw_hub() -> void:
-	draw_rect(Rect2(Vector2.ZERO, SCREEN), Color("#0a2540"))
-	draw_rect(Rect2(0, 215, SCREEN.x, 570), Color("#147a9e"))
-	draw_rect(Rect2(0, 785, SCREEN.x, 495), Color("#e9c46a"))
-
-	for y in range(250, 760, 48):
-		draw_line(Vector2(0, y), Vector2(SCREEN.x, y + sin(float(y)) * 20.0), Color(1, 1, 1, 0.10), 3)
+	_draw_manta_background()
 
 	_draw_pier()
 	_draw_beach_symbols()
@@ -290,6 +304,48 @@ func _draw_hub() -> void:
 		_draw_final_marker()
 
 	_draw_player()
+
+
+func _draw_manta_background() -> void:
+	draw_rect(Rect2(Vector2.ZERO, SCREEN), Color("#071b35"))
+	draw_rect(Rect2(0, 0, SCREEN.x, 210), Color("#12345c"))
+	draw_circle(Vector2(592, 112), 50, Color("#f4a261"))
+	draw_rect(Rect2(0, 205, SCREEN.x, 570), Color("#116d90"))
+	draw_rect(Rect2(0, 760, SCREEN.x, 520), Color("#d8b56f"))
+	draw_rect(Rect2(0, 710, SCREEN.x, 86), Color("#efcf8b"))
+	for y in range(240, 735, 42):
+		draw_line(Vector2(0, y), Vector2(SCREEN.x, y + sin(float(y) * 0.1) * 22.0), Color(1, 1, 1, 0.12), 3)
+	for x in range(0, int(SCREEN.x), 36):
+		draw_rect(Rect2(x, 760 + (x % 72) * 0.2, 18, 520), Color(0, 0, 0, 0.035))
+	_draw_pixel_cloud(Vector2(72, 88))
+	_draw_pixel_cloud(Vector2(350, 128))
+	_draw_city_silhouette()
+	_draw_palm(Vector2(95, 760))
+	_draw_palm(Vector2(640, 790))
+
+
+func _draw_city_silhouette() -> void:
+	for i in range(8):
+		var x := 28 + i * 72
+		var h := 28 + (i % 3) * 18
+		draw_rect(Rect2(x, 176 - h, 42, h), Color("#0b2442"))
+		draw_rect(Rect2(x + 8, 184 - h, 8, 8), Color("#48cae4"))
+		draw_rect(Rect2(x + 25, 184 - h, 8, 8), Color("#48cae4"))
+
+
+func _draw_pixel_cloud(pos: Vector2) -> void:
+	var c := Color(1, 1, 1, 0.78)
+	draw_rect(Rect2(pos.x, pos.y, 46, 18), c)
+	draw_rect(Rect2(pos.x + 18, pos.y - 14, 54, 26), c)
+	draw_rect(Rect2(pos.x + 58, pos.y, 46, 18), c)
+
+
+func _draw_palm(pos: Vector2) -> void:
+	draw_rect(Rect2(pos.x - 8, pos.y - 80, 16, 82), Color("#7a4b24"))
+	for i in range(5):
+		var angle := -PI * 0.85 + i * PI * 0.42
+		var end := pos + Vector2(cos(angle), sin(angle)) * 72 + Vector2(0, -85)
+		draw_line(pos + Vector2(0, -82), end, Color("#2a9d8f"), 8)
 
 
 func _draw_pier() -> void:
@@ -309,12 +365,12 @@ func _draw_beach_symbols() -> void:
 	draw_circle(Vector2(95, 900), 18, Color("#f4e4bc"))
 	_draw_text(Vector2(42, 952), "Concha Spondylus", 17, Color("#0a2540"))
 
-	draw_arc(Vector2(235, 1035), 38, 0, PI, 24, Color("#2a9d8f"), 5)
-	draw_line(Vector2(197, 1035), Vector2(273, 1035), Color("#2a9d8f"), 5)
+	_draw_silla_u(Vector2(235, 1030), 0.9, Color("#2aa7c9"))
 	_draw_text(Vector2(168, 1078), "Silla U Mantena", 17, Color("#0a2540"))
 
 
 func _draw_astillero() -> void:
+	draw_rect(Rect2(448, 880, 220, 210), Color("#495057"))
 	draw_rect(Rect2(465, 895, 185, 180), Color("#6c757d"))
 	draw_rect(Rect2(490, 845, 135, 62), Color("#495057"))
 	_draw_polygon([Vector2(465, 895), Vector2(555, 825), Vector2(650, 895)], Color("#343a40"))
@@ -322,6 +378,8 @@ func _draw_astillero() -> void:
 	draw_rect(Rect2(568, 955, 52, 80), Color("#212529"))
 	_draw_text(Vector2(482, 914), "EL ASTILLERO", 22, Color("#f4e4bc"))
 	_draw_text(Vector2(475, 1090), "reparacion naval", 15, Color("#0a2540"))
+	draw_line(Vector2(455, 875), Vector2(650, 1040), Color("#212529"), 5)
+	draw_line(Vector2(650, 875), Vector2(455, 1040), Color("#212529"), 5)
 
 
 func _draw_all_boats() -> void:
@@ -346,9 +404,13 @@ func _draw_all_boats() -> void:
 
 
 func _draw_player() -> void:
-	draw_circle(player_pos, 25, Color("#264653"))
-	draw_circle(player_pos + Vector2(0, -18), 15, Color("#f4e4bc"))
-	draw_rect(Rect2(player_pos.x - 18, player_pos.y + 5, 36, 34), Color("#e76f51"))
+	draw_rect(Rect2(player_pos.x - 18, player_pos.y + 0, 36, 40), Color("#e76f51"))
+	draw_rect(Rect2(player_pos.x - 12, player_pos.y + 40, 10, 24), Color("#264653"))
+	draw_rect(Rect2(player_pos.x + 2, player_pos.y + 40, 10, 24), Color("#264653"))
+	draw_rect(Rect2(player_pos.x - 18, player_pos.y - 36, 36, 36), Color("#f4e4bc"))
+	draw_rect(Rect2(player_pos.x - 20, player_pos.y - 42, 40, 12), Color("#264653"))
+	draw_rect(Rect2(player_pos.x - 7, player_pos.y - 20, 5, 5), Color("#0a2540"))
+	draw_rect(Rect2(player_pos.x + 7, player_pos.y - 20, 5, 5), Color("#0a2540"))
 
 
 func _draw_final_marker() -> void:
@@ -387,3 +449,30 @@ func _draw_ellipse(rect: Rect2, color: Color) -> void:
 
 func _draw_polygon(points: Array, color: Color) -> void:
 	draw_polygon(PackedVector2Array(points), PackedColorArray([color]))
+
+
+func _draw_silla_u(center: Vector2, scale: float, color: Color) -> void:
+	var left := center + Vector2(-62, -70) * scale
+	var right := center + Vector2(62, -70) * scale
+	var bottom := center + Vector2(0, 32) * scale
+	draw_line(left, center + Vector2(-52, -10) * scale, color, 5 * scale)
+	draw_arc(bottom + Vector2(0, -42) * scale, 62 * scale, 0.12, PI - 0.12, 30, color, 5 * scale)
+	draw_line(right, center + Vector2(52, -10) * scale, color, 5 * scale)
+	draw_rect(Rect2(left.x - 18 * scale, left.y - 16 * scale, 32 * scale, 22 * scale), color)
+	draw_rect(Rect2(right.x - 14 * scale, right.y - 16 * scale, 32 * scale, 22 * scale), color)
+	for i in range(9):
+		var x := center.x - 48 * scale + i * 12 * scale
+		var y := center.y + sin(float(i) * 0.65) * 16 * scale
+		_draw_diamond(Vector2(x, y), 7 * scale, color)
+	draw_circle(center + Vector2(0, 68) * scale, 28 * scale, color)
+	draw_circle(center + Vector2(0, 68) * scale, 20 * scale, Color("#d8f7ff"))
+	draw_rect(Rect2(center.x - 55 * scale, center.y + 95 * scale, 110 * scale, 18 * scale), color)
+
+
+func _draw_diamond(center: Vector2, radius: float, color: Color) -> void:
+	_draw_polygon([
+		center + Vector2(0, -radius),
+		center + Vector2(radius, 0),
+		center + Vector2(0, radius),
+		center + Vector2(-radius, 0)
+	], color)

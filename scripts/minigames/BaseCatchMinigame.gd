@@ -39,6 +39,10 @@ func cancel() -> void:
 	failed.emit()
 
 
+func action() -> void:
+	pass
+
+
 func _process(delta: float) -> void:
 	if banner_time > 0.0:
 		banner_time -= delta
@@ -105,9 +109,7 @@ func _show_banner(text: String) -> void:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, SCREEN), Color("#0a2540"))
-	draw_rect(Rect2(0, 210, SCREEN.x, 870), Color("#147a9e"))
-	draw_rect(Rect2(0, 1080, SCREEN.x, 200), Color("#8b5a2b"))
+	_draw_ocean_background()
 
 	for y in range(250, 1040, 50):
 		draw_line(Vector2(0, y), Vector2(SCREEN.x, y + sin(float(y)) * 18.0), Color(1, 1, 1, 0.08), 3)
@@ -130,6 +132,17 @@ func _draw() -> void:
 	if banner != "":
 		draw_rect(Rect2(80, 610, 560, 80), Color(0, 0, 0, 0.72))
 		_draw_text(Vector2(110, 662), banner, 23, Color("#f4e4bc"))
+
+
+func _draw_ocean_background() -> void:
+	draw_rect(Rect2(Vector2.ZERO, SCREEN), Color("#071b35"))
+	draw_rect(Rect2(0, 0, SCREEN.x, 210), Color("#102a4c"))
+	draw_rect(Rect2(0, 210, SCREEN.x, 870), Color("#147a9e"))
+	draw_rect(Rect2(0, 1080, SCREEN.x, 200), Color("#8b5a2b"))
+	for y in range(250, 1040, 50):
+		draw_line(Vector2(0, y), Vector2(SCREEN.x, y + sin(float(y)) * 18.0), Color(1, 1, 1, 0.08), 3)
+	for x in range(0, int(SCREEN.x), 48):
+		draw_rect(Rect2(x, 1080, 24, 200), Color(0, 0, 0, 0.08))
 
 
 func _draw_good_item(pos: Vector2) -> void:

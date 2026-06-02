@@ -21,9 +21,9 @@ Este repositorio ahora prioriza Godot. La version web/Capacitor fue eliminada pa
 ## Minijuegos
 
 1. **Pesca responsable**: recoge pesca y evita basura marina.
-2. **Balsa Mantena**: recupera memoria ancestral y evita rocas.
-3. **Ruta Spondylus**: recoge conchas Spondylus y evita olas fuertes.
-4. **El Astillero**: repara piezas navales y evita herramientas danadas.
+2. **Silla U Bubble**: bubble shooter con simbolos de la Silla U Mantena.
+3. **Surf Spondylus**: surfea olas, salta troncos y recoge conchas.
+4. **Taller del Astillero**: puzzle de reparacion naval por secuencia.
 
 ## Controles
 

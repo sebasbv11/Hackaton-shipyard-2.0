@@ -51,4 +51,4 @@ Escenas:
 - `scenes/minigames/Minigame3Spondylus.tscn`
 - `scenes/minigames/Minigame4Astillero.tscn`
 
-Cada minijuego hereda del mismo comportamiento base, pero define su tema, objetivo, recompensa y arte temporal.
+Los minijuegos comparten senales y controles base, pero sus mecanicas son distintas: recoleccion, bubble shooter, surf y puzzle de reparacion.

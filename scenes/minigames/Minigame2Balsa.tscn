@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://minigame_2_balsa"]
+
+[ext_resource type="Script" path="res://scripts/minigames/Minigame2Balsa.gd" id="1_balsa"]
+
+[node name="Minigame2Balsa" type="Node2D"]
+script = ExtResource("1_balsa")

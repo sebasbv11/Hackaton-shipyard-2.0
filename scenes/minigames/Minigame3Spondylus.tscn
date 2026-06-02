@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://minigame_3_spondylus"]
+
+[ext_resource type="Script" path="res://scripts/minigames/Minigame3Spondylus.gd" id="1_spondylus"]
+
+[node name="Minigame3Spondylus" type="Node2D"]
+script = ExtResource("1_spondylus")

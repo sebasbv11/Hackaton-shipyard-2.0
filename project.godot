@@ -1,0 +1,23 @@
+; Engine configuration file.
+; Edit with Godot 4.x.
+
+config_version=5
+
+[application]
+
+config/name="Manta: El Astillero"
+run/main_scene="res://scenes/hub/HubWorld.tscn"
+config/features=PackedStringArray("4.2", "Mobile")
+config/icon="res://icons/icon-192.png"
+
+[display]
+
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/handheld/orientation=1
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[rendering]
+
+renderer/rendering_method="mobile"

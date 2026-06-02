@@ -13,7 +13,7 @@
 3. Ve a **Proyecto > Exportar**.
 4. Agrega preset **Android**.
 5. Configura:
-   - Nombre: `Manta: El Astillero`
+   - Nombre: `Manta: Ruta Spondylus`
    - Orientacion: portrait
    - Icono: agrega uno nuevo cuando exista una identidad visual final
 6. Exporta APK para pruebas.

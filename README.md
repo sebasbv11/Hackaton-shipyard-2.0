@@ -1,37 +1,38 @@
-# Manta: El Astillero
+# Manta: Ruta Spondylus
 
-Juego movil en Godot 4.6 basado en Manta, Ecuador.
+Juego movil 2D en Godot 4.6 basado en Manta, Ecuador.
 
-El jugador inicia en el muelle, explora libremente, sube a barcos y completa 4 minijuegos relacionados con la ciudad: pesca, playa, cultura mantena, barcos y astilleros. Al reunir las 4 piezas culturales, vuelve a **EL ASTILLERO** para activar el evento final: la zarpada del Barco Jocay.
+El proyecto queda enfocado en un solo modulo jugable: un plataformas de dos niveles donde el jugador recoge todas las conchas Spondylus y llega a la salida. Los otros minijuegos quedan fuera para que otros companeros puedan conectarlos por modularidad.
 
 ## Estado actual
 
-Este repositorio ahora prioriza Godot. La version web/Capacitor fue eliminada para evitar duplicacion, choques de flujo y archivos que ya no representan el objetivo del proyecto.
+- Proyecto Godot limpio.
+- Un solo juego principal.
+- 2 niveles jugables.
+- Personaje animado por spritesheet.
+- Controles para PC y movil.
+- Fondos 2D dibujados por codigo con ambiente de playa, puerto y astillero.
 
 ## Estructura
 
 - `project.godot`: configuracion del proyecto.
-- `scenes/hub/`: escena principal del muelle de Manta.
-- `scenes/minigames/`: escenas separadas para cada minijuego.
-- `scripts/hub/`: logica de exploracion, barcos, recompensas y evento final.
-- `scripts/characters/`: animacion y dibujo del personaje.
-- `scripts/minigames/`: logica base y scripts especificos de minijuegos.
-- `scripts/data/`: datos centrales del juego.
+- `scenes/platformer/PlatformerGame.tscn`: escena principal.
+- `scripts/platformer/PlatformerGame.gd`: logica completa del plataformas.
+- `assets/player/player_retro_sprite_sheet.png`: spritesheet del personaje.
 - `docs/`: guias de estructura y exportacion movil.
-- `assets/placeholders/`: sprites temporales solo para demo interna.
-
-## Minijuegos
-
-1. **Pesca responsable**: recoge pesca y evita basura marina.
-2. **Silla U Bubble**: bubble shooter con simbolos de la Silla U Mantena.
-3. **Surf Spondylus**: surfea olas, salta troncos y recoge conchas.
-4. **Taller del Astillero**: puzzle de reparacion naval por secuencia.
 
 ## Controles
 
-- PC: WASD o flechas para moverse.
-- PC: Enter o Espacio para interactuar.
+- PC: `A/D` o flechas para moverse.
+- PC: `Enter` o `Espacio` para saltar.
 - Movil: botones en pantalla.
+
+## Objetivo
+
+1. Recoge todas las conchas Spondylus del nivel.
+2. Evita obstaculos.
+3. Llega a la salida.
+4. Completa los 2 niveles.
 
 ## Abrir en Godot
 
@@ -39,5 +40,3 @@ Este repositorio ahora prioriza Godot. La version web/Capacitor fue eliminada pa
 2. Selecciona **Importar**.
 3. Elige esta carpeta.
 4. Ejecuta la escena principal.
-
-El siguiente trabajo visual recomendado es reemplazar placeholders por sprites propios: personaje, muelle, playa, barcos pesqueros, astillero, Spondylus, Silla U Mantena y recompensas.

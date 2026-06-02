@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Manta: El Astillero"
-run/main_scene="res://scenes/hub/HubWorld.tscn"
+config/name="Manta: Ruta Spondylus"
+run/main_scene="res://scenes/platformer/PlatformerGame.tscn"
 config/features=PackedStringArray("4.6", "Mobile")
 [display]
 

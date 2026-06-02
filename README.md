@@ -1,6 +1,6 @@
 # Manta: El Astillero
 
-Juego movil en Godot 4 basado en Manta, Ecuador.
+Juego movil en Godot 4.6 basado en Manta, Ecuador.
 
 El jugador inicia en el muelle, explora libremente, sube a barcos y completa 4 minijuegos relacionados con la ciudad: pesca, playa, cultura mantena, barcos y astilleros. Al reunir las 4 piezas culturales, vuelve a **EL ASTILLERO** para activar el evento final: la zarpada del Barco Jocay.
 
@@ -34,7 +34,7 @@ Este repositorio ahora prioriza Godot. La version web/Capacitor fue eliminada pa
 
 ## Abrir en Godot
 
-1. Abre Godot 4.
+1. Abre Godot 4.6 Standard o una version estable mas reciente.
 2. Selecciona **Importar**.
 3. Elige esta carpeta.
 4. Ejecuta la escena principal.

@@ -2,7 +2,7 @@
 
 ## Requisitos
 
-- Godot 4.x
+- Godot 4.6 Standard o una version estable mas reciente
 - Android Studio o Android SDK
 - Plantillas de exportacion Android instaladas en Godot
 

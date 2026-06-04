@@ -7,7 +7,7 @@
 [ext_resource type="StyleBox" uid="uid://dv3co7cvu1bqc" path="res://estilos_botones/hover.tres" id="4_lbtcn"]
 [ext_resource type="StyleBox" uid="uid://jgx5d8sbpw7e" path="res://estilos_botones/focused.tres" id="5_a8m85"]
 [ext_resource type="Script" uid="uid://ksr0biggaout" path="res://escenas/menu_principal/boton_jugar.gd" id="6_hkuy5"]
-[ext_resource type="PackedScene" uid="uid://wokgedb436jk" path="res://escenas/escena_principal/escena_principal.tscn" id="7_7mlcq"]
+[ext_resource type="PackedScene" path="res://escenas/lobby/lobby.tscn" id="7_7mlcq"]
 [ext_resource type="Script" uid="uid://dxkhjdspmj0f2" path="res://escenas/menu_principal/boton_cargar.gd" id="9_cceyl"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a8m85"]

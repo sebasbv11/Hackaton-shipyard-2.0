@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dpi6214n0auyo"]
+
+[node name="EscenaFinal" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -99.0
+offset_top = -11.5
+offset_right = 99.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "¡Felicidades! ¡Has ganado!"

@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://l47yfp615nd8"]
+
+[ext_resource type="Shader" uid="uid://bsyjm47tok7cp" path="res://shaders/shader_rojo.tres" id="1_71tfo"]
+
+[resource]
+shader = ExtResource("1_71tfo")

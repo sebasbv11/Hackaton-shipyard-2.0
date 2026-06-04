@@ -155,11 +155,17 @@ func _interact() -> void:
 	if _active_boat == 1 and not ruta_minijuego_1.is_empty():
 		get_tree().change_scene_to_file(ruta_minijuego_1)
 	elif _active_boat == 3 and not ruta_minijuego_3.is_empty():
+		_reiniciar_progreso_plataforma()
 		get_tree().change_scene_to_file(ruta_minijuego_3)
 	elif _active_boat == 4 and not ruta_minijuego_4.is_empty():
 		get_tree().change_scene_to_file(ruta_minijuego_4)
 	elif is_instance_valid(mensaje):
 		mensaje.text = "Ese barco aun no tiene minijuego conectado."
+
+
+func _reiniciar_progreso_plataforma() -> void:
+	ControladorGlobal.nivel = 1
+	ControladorGlobal.muertes = 0
 
 
 func _create_mobile_controls() -> void:

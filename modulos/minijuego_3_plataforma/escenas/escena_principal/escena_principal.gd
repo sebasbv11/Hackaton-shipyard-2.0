@@ -9,10 +9,8 @@ var _nivel_instanciado: Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if ControladorGlobal.nivel > 1:
-		_cargar_nivel()
-	else:
-		_crear_nivel(_nivel_actual)
+	ControladorGlobal.nivel = 1
+	_crear_nivel(_nivel_actual)
 
 
 func _crear_nivel(numero_nivel: int):
@@ -32,7 +30,6 @@ func _crear_nivel(numero_nivel: int):
 			break
 	
 	ControladorGlobal.nivel = numero_nivel
-	controlador_partida.guardar_partida()
 
 
 func _eliminar_nivel():

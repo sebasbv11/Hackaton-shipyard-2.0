@@ -1,14 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://67bggxbecjc1"]
+[gd_scene load_steps=9 format=3 uid="uid://67bggxbecjc1"]
 
 [ext_resource type="Theme" uid="uid://cyxbuspmwya6m" path="res://temas/boton_menu_principal.tres" id="1_1tgsf"]
-[ext_resource type="PackedScene" uid="uid://dc6cpdwni6fxq" path="res://modulos/minijuego_3_plataforma/escenas/controlador_partida/controlador_partida.tscn" id="1_w4esp"]
 [ext_resource type="StyleBox" uid="uid://cjln8xils5vs8" path="res://estilos_botones/normal.tres" id="2_00m27"]
 [ext_resource type="StyleBox" uid="uid://cc5h8txc2kbct" path="res://estilos_botones/pressed.tres" id="3_a8m85"]
 [ext_resource type="StyleBox" uid="uid://dv3co7cvu1bqc" path="res://estilos_botones/hover.tres" id="4_lbtcn"]
 [ext_resource type="StyleBox" uid="uid://jgx5d8sbpw7e" path="res://estilos_botones/focused.tres" id="5_a8m85"]
 [ext_resource type="Script" uid="uid://ksr0biggaout" path="res://modulos/menu_principal/escenas/menu_principal/boton_jugar.gd" id="6_hkuy5"]
 [ext_resource type="PackedScene" path="res://modulos/minijuego_1/escenas/minijuego_1/intro.tscn" id="7_7mlcq"]
-[ext_resource type="Script" uid="uid://dxkhjdspmj0f2" path="res://modulos/menu_principal/escenas/menu_principal/boton_cargar.gd" id="9_cceyl"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a8m85"]
 particle_flag_disable_z = true
@@ -26,8 +24,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ControladorPartida" parent="." instance=ExtResource("1_w4esp")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -54,18 +50,6 @@ theme_override_styles/focus = ExtResource("5_a8m85")
 text = "Jugar"
 script = ExtResource("6_hkuy5")
 escena_principal = ExtResource("7_7mlcq")
-
-[node name="Cargar" type="Button" parent="VBoxContainer" node_paths=PackedStringArray("controlador_partida", "boton_jugar")]
-layout_mode = 2
-theme = ExtResource("1_1tgsf")
-theme_override_styles/normal = ExtResource("2_00m27")
-theme_override_styles/pressed = ExtResource("3_a8m85")
-theme_override_styles/hover = ExtResource("4_lbtcn")
-theme_override_styles/focus = ExtResource("5_a8m85")
-text = "Cargar"
-script = ExtResource("9_cceyl")
-controlador_partida = NodePath("../../ControladorPartida")
-boton_jugar = NodePath("../Jugar")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 1

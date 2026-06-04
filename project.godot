@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Manta Plataforma Movil"
-run/main_scene="res://escenas/menu_principal/menu_principal.tscn"
+run/main_scene="res://modulos/menu_principal/escenas/menu_principal/menu_principal.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility", "Mobile")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
@@ -23,7 +23,9 @@ config/icon="uid://cgpuv2tx6rvhh"
 
 [autoload]
 
-ControladorGlobal="*res://scripts/controlador_global.gd"
+ControladorGlobal="*res://modulos/comun/scripts/controlador_global.gd"
+GameManager="*res://modulos/minijuego_1/scripts/minijuego_1/GameManager.gd"
+MenuPausa="*res://modulos/comun/scripts/menu_pausa.gd"
 
 [display]
 

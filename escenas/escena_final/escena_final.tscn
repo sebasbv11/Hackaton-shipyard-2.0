@@ -1,14 +1,19 @@
-[gd_scene format=3 uid="uid://dpi6214n0auyo"]
+[gd_scene load_steps=2 format=3 uid="uid://dpi6214n0auyo"]
+
+[ext_resource type="Texture2D" path="res://sprites/fondos/ocean_noon.png" id="1_fondo_noon"]
 
 [node name="EscenaFinal" type="CanvasLayer"]
 
-[node name="Fondo" type="ColorRect" parent="."]
+[node name="Fondo" type="TextureRect" parent="."]
+texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.03137255, 0.11764706, 0.16470589, 1)
+texture = ExtResource("1_fondo_noon")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Mensaje" type="Label" parent="Fondo"]
 layout_mode = 1
@@ -24,7 +29,7 @@ offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.93333334, 0.7058824, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.55)
+theme_override_colors/font_shadow_color = Color(0.0156863, 0.145098, 0.247059, 0.72)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
 theme_override_font_sizes/font_size = 52

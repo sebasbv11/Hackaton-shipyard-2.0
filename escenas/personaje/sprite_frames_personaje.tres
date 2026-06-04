@@ -1,8 +1,8 @@
 [gd_resource type="SpriteFrames" load_steps=22 format=3 uid="uid://c5mnre1cjdigx"]
 
-[ext_resource type="Texture2D" uid="uid://dp1m5oaguk2oj" path="res://free-pixel-art-tiny-hero-sprites/3 Dude_Monster/Dude_Monster_Run_6.png" id="1_run"]
-[ext_resource type="Texture2D" uid="uid://bw7d10bcq76gl" path="res://free-pixel-art-tiny-hero-sprites/3 Dude_Monster/Dude_Monster_Idle_4.png" id="2_idle"]
-[ext_resource type="Texture2D" uid="uid://cbyeeaes708cu" path="res://free-pixel-art-tiny-hero-sprites/3 Dude_Monster/Dude_Monster_Jump_8.png" id="3_jump"]
+[ext_resource type="Texture2D" path="res://sprites/personaje/dude_monster/run.png" id="1_run"]
+[ext_resource type="Texture2D" path="res://sprites/personaje/dude_monster/idle.png" id="2_idle"]
+[ext_resource type="Texture2D" path="res://sprites/personaje/dude_monster/jump.png" id="3_jump"]
 
 [sub_resource type="AtlasTexture" id="Run_0"]
 atlas = ExtResource("1_run")

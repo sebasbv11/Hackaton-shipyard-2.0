@@ -1,12 +1,28 @@
-[gd_scene load_steps=6 format=4 uid="uid://dc2qh7qqnq6pl"]
+[gd_scene load_steps=7 format=4 uid="uid://dc2qh7qqnq6pl"]
 
 [ext_resource type="PackedScene" uid="uid://q18cexxip2j8" path="res://escenas/bordes/bordes.tscn" id="1_3shkt"]
+[ext_resource type="Texture2D" path="res://sprites/fondos/ocean_noon.png" id="1_fondo_noon"]
 [ext_resource type="PackedScene" uid="uid://bdojqunsrvdi2" path="res://escenas/personaje/personaje.tscn" id="2_r1e6l"]
 [ext_resource type="PackedScene" uid="uid://dmacu6kbko37e" path="res://escenas/contenedor_monedas/contenedor_monedas.tscn" id="3_q1x2y"]
 [ext_resource type="PackedScene" uid="uid://nk8qxh5ukg7p" path="res://escenas/moneda/moneda.tscn" id="4_1npjp"]
 [ext_resource type="TileSet" uid="uid://dnahkmnbclurl" path="res://tile_sets/mazmorra.tres" id="5_uc2ro"]
 
 [node name="Nivel2" type="Node2D"]
+
+[node name="FondoMar" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Imagen" type="TextureRect" parent="FondoMar"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_fondo_noon")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Bordes" parent="." instance=ExtResource("1_3shkt")]
 

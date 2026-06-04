@@ -27,6 +27,10 @@ ControladorGlobal="*res://modulos/comun/scripts/controlador_global.gd"
 GameManager="*res://modulos/minijuego_1/scripts/minijuego_1/GameManager.gd"
 MenuPausa="*res://modulos/comun/scripts/menu_pausa.gd"
 
+[audio]
+
+buses/default_bus_layout="res://default_bus_layout.tres"
+
 [display]
 
 window/size/viewport_width=720

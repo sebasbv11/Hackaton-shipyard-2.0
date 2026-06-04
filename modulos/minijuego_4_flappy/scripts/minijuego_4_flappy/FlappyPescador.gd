@@ -34,7 +34,6 @@ var nets: Array[Dictionary] = []
 var splashes: Array[Dictionary] = []
 var fishes: Array[Dictionary] = []
 var gulls: Array[Dictionary] = []
-var music_player: AudioStreamPlayer
 var sfx_player: AudioStreamPlayer
 var score_label: Label
 var best_label: Label
@@ -449,13 +448,9 @@ func _update_ui() -> void:
 	best_label.text = "Mejor marca: %d" % best_score
 
 func _create_audio() -> void:
-	music_player = AudioStreamPlayer.new()
 	sfx_player = AudioStreamPlayer.new()
-	add_child(music_player)
+	sfx_player.bus = &"SFX" if AudioServer.get_bus_index(&"SFX") >= 0 else &"Master"
 	add_child(sfx_player)
-	music_player.stream = _make_tone(220.0, 2.4, 0.06, true)
-	music_player.volume_db = -20.0
-	music_player.play()
 
 func _play_sfx(kind: String) -> void:
 	var freq := 660.0
@@ -470,7 +465,7 @@ func _play_sfx(kind: String) -> void:
 		duration = 0.25
 		volume = 0.20
 	sfx_player.stream = _make_tone(freq, duration, volume, false)
-	sfx_player.volume_db = -9.0
+	sfx_player.volume_db = -4.0
 	sfx_player.play()
 
 func _make_tone(freq: float, seconds: float, volume: float, loop: bool) -> AudioStreamWAV:

@@ -1,12 +1,21 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://modulos/lobby/scripts/lobby.gd" id="1_lobby"]
 [ext_resource type="SpriteFrames" path="res://modulos/minijuego_3_plataforma/escenas/personaje/sprite_frames_personaje.tres" id="2_frames"]
+[ext_resource type="AudioStream" path="res://audio/musica_fondo.wav" id="3_musica_fondo"]
+[ext_resource type="Script" path="res://modulos/comun/scripts/audio_loop_player.gd" id="4_audio_loop"]
 
 [node name="LobbyMuelle" type="Node2D" node_paths=PackedStringArray("animacion", "mensaje")]
 script = ExtResource("1_lobby")
 animacion = NodePath("Jugador/Animacion")
 mensaje = NodePath("CanvasLayer/Panel/Mensaje")
+
+[node name="MusicaFondo" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_musica_fondo")
+volume_db = -2.0
+autoplay = true
+bus = &"Musica"
+script = ExtResource("4_audio_loop")
 
 [node name="Jugador" type="Node2D" parent="."]
 position = Vector2(360, 1030)

@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://modulos/minijuego_1/scripts/minijuego_1/FaseDos.gd" id="1_fasedos"]
 [ext_resource type="Script" path="res://modulos/minijuego_1/scripts/minijuego_1/Boat.gd" id="2_boat"]
 [ext_resource type="Script" path="res://modulos/minijuego_1/scripts/minijuego_1/Hook.gd" id="3_hook"]
 [ext_resource type="PackedScene" path="res://modulos/minijuego_1/escenas/minijuego_1/atun.tscn" id="4_atun"]
 [ext_resource type="PackedScene" path="res://modulos/minijuego_1/escenas/minijuego_1/tortuga.tscn" id="5_tortuga"]
+[ext_resource type="AudioStream" path="res://audio/musica_bote_pesca.wav" id="6_musica_bote"]
+[ext_resource type="AudioStream" path="res://audio/sonido_olas_mar.wav" id="7_olas_mar"]
+[ext_resource type="Script" path="res://modulos/comun/scripts/audio_loop_player.gd" id="8_audio_loop"]
 
 [sub_resource type="RectangleShape2D" id="barco_col"]
 size = Vector2(134, 32)
@@ -16,6 +19,20 @@ radius = 22.0
 script = ExtResource("1_fasedos")
 escena_atun = ExtResource("4_atun")
 escena_tortuga = ExtResource("5_tortuga")
+
+[node name="MusicaBote" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_musica_bote")
+volume_db = -2.0
+autoplay = true
+bus = &"Musica"
+script = ExtResource("8_audio_loop")
+
+[node name="OlasMar" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_olas_mar")
+volume_db = -6.0
+autoplay = true
+bus = &"SFX"
+script = ExtResource("8_audio_loop")
 
 [node name="FondoOceano" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(0,0, 1280,0, 1280,720, 0,720)

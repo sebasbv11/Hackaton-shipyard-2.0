@@ -1,9 +1,18 @@
-[gd_scene format=3 uid="uid://cqb2m30yl5txc"]
+[gd_scene load_steps=4 format=3 uid="uid://cqb2m30yl5txc"]
 
 [ext_resource type="Script" uid="uid://46t4fvb5bnvo" path="res://modulos/minijuego_1/scripts/minijuego_1/Intro.gd" id="1_intro"]
+[ext_resource type="AudioStream" path="res://audio/musica_bote_pesca.wav" id="2_musica_bote"]
+[ext_resource type="Script" path="res://modulos/comun/scripts/audio_loop_player.gd" id="3_audio_loop"]
 
 [node name="Intro" type="Node2D" unique_id=401659836]
 script = ExtResource("1_intro")
+
+[node name="MusicaBote" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_musica_bote")
+volume_db = -2.0
+autoplay = true
+bus = &"Musica"
+script = ExtResource("3_audio_loop")
 
 [node name="FondoNoche" type="Polygon2D" parent="." unique_id=608586486]
 color = Color(0.04, 0.02, 0.14, 1)

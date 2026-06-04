@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://67bggxbecjc1"]
+[gd_scene load_steps=11 format=3 uid="uid://67bggxbecjc1"]
 
 [ext_resource type="Theme" uid="uid://cyxbuspmwya6m" path="res://temas/boton_menu_principal.tres" id="1_1tgsf"]
 [ext_resource type="StyleBox" uid="uid://cjln8xils5vs8" path="res://estilos_botones/normal.tres" id="2_00m27"]
@@ -7,6 +7,8 @@
 [ext_resource type="StyleBox" uid="uid://jgx5d8sbpw7e" path="res://estilos_botones/focused.tres" id="5_a8m85"]
 [ext_resource type="Script" uid="uid://ksr0biggaout" path="res://modulos/menu_principal/escenas/menu_principal/boton_jugar.gd" id="6_hkuy5"]
 [ext_resource type="PackedScene" path="res://modulos/minijuego_1/escenas/minijuego_1/intro.tscn" id="7_7mlcq"]
+[ext_resource type="AudioStream" path="res://audio/musica_fondo.wav" id="8_musica_fondo"]
+[ext_resource type="Script" path="res://modulos/comun/scripts/audio_loop_player.gd" id="9_audio_loop"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a8m85"]
 particle_flag_disable_z = true
@@ -24,6 +26,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="MusicaFondo" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_musica_fondo")
+volume_db = -2.0
+autoplay = true
+bus = &"Musica"
+script = ExtResource("9_audio_loop")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

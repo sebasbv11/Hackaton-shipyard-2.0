@@ -1,3 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
+.godot_runtime/
 /android/
+builds/
+godot-*.log
+*.apk
+*.aab
+*.tmp

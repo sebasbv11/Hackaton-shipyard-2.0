@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://wokgedb436jk"]
+[gd_scene load_steps=10 format=3 uid="uid://wokgedb436jk"]
 
 [ext_resource type="PackedScene" uid="uid://bm7ynf8ht1xr8" path="res://escenas/nivel_1/nivel_1.tscn" id="1_pdctq"]
 [ext_resource type="Script" uid="uid://de3hna2y84jwe" path="res://escenas/escena_principal/escena_principal.gd" id="1_snxy5"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dc6cpdwni6fxq" path="res://escenas/controlador_partida/controlador_partida.tscn" id="6_e307b"]
 [ext_resource type="PackedScene" uid="uid://do05mkwxxx06b" path="res://escenas/contador_muertes/contador_muertes.tscn" id="6_px6n3"]
 [ext_resource type="Script" uid="uid://b1sdhesyweg0h" path="res://escenas/escena_principal/controlador_pausa.gd" id="8_e307b"]
+[ext_resource type="PackedScene" path="res://escenas/controles_moviles/controles_moviles.tscn" id="9_controles"]
 
 [node name="EscenaPrincipal" type="Node2D" node_paths=PackedStringArray("controlador_partida")]
 script = ExtResource("1_snxy5")
@@ -35,6 +36,8 @@ offset_top = 16.825
 offset_right = 0.0
 offset_bottom = 16.825
 grow_vertical = 1
+
+[node name="ControlesMoviles" parent="CanvasLayer" instance=ExtResource("9_controles")]
 
 [node name="ControladorPausa" type="Node" parent="."]
 process_mode = 3

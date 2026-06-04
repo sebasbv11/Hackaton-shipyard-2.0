@@ -16,6 +16,12 @@ func _ready() -> void:
 
 
 func _crear_nivel(numero_nivel: int):
+	if niveles.is_empty():
+		push_error("No hay niveles configurados en EscenaPrincipal.")
+		return
+
+	numero_nivel = clampi(numero_nivel, 1, niveles.size())
+	_nivel_actual = numero_nivel
 	_nivel_instanciado = niveles[numero_nivel - 1].instantiate()
 	add_child(_nivel_instanciado)
 	
@@ -30,7 +36,8 @@ func _crear_nivel(numero_nivel: int):
 
 
 func _eliminar_nivel():
-	_nivel_instanciado.queue_free()
+	if is_instance_valid(_nivel_instanciado):
+		_nivel_instanciado.queue_free()
 
 
 func _reiniciar_nivel():
@@ -39,6 +46,9 @@ func _reiniciar_nivel():
 
 
 func siguiente_nivel():
+	if _nivel_actual >= niveles.size():
+		return
+
 	_nivel_actual += 1
 	_eliminar_nivel()
 	_crear_nivel.call_deferred(_nivel_actual)

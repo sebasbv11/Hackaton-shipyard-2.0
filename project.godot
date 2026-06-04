@@ -14,9 +14,9 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="Tutorial"
+config/name="Manta Plataforma Movil"
 run/main_scene="res://escenas/menu_principal/menu_principal.tscn"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.6", "GL Compatibility", "Mobile")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
 config/icon="uid://cgpuv2tx6rvhh"
@@ -27,7 +27,11 @@ ControladorGlobal="*res://scripts/controlador_global.gd"
 
 [display]
 
+window/size/viewport_width=720
+window/size/viewport_height=1280
 window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=1
 
 [input]
 
@@ -54,8 +58,8 @@ pausa={
 
 [layer_names]
 
-2d_physics/layer_1="Sólido"
-2d_physics/layer_2="Daño"
+2d_physics/layer_1="Solido"
+2d_physics/layer_2="Dano"
 2d_physics/layer_3="Jugador"
 2d_physics/layer_4="Recolectable"
 

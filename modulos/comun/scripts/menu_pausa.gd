@@ -1,6 +1,9 @@
 extends Node
 
 const RUTA_LOBBY := "res://modulos/lobby/escenas/lobby.tscn"
+const RUTA_MINIJUEGO_1 := "res://modulos/minijuego_1/escenas/minijuego_1/intro.tscn"
+const RUTA_PLATAFORMA := "res://modulos/minijuego_3_plataforma/escenas/escena_principal/escena_principal.tscn"
+const RUTA_FLAPPY := "res://modulos/minijuego_4_flappy/escenas/minijuego_4_flappy/FlappyPescador.tscn"
 const RUTAS_EXCLUIDAS := [
 	"res://modulos/lobby/",
 	"res://modulos/menu_principal/",
@@ -11,6 +14,7 @@ var boton_pausa: Button
 var panel: Panel
 var titulo: Label
 var boton_continuar: Button
+var boton_reiniciar: Button
 var boton_lobby: Button
 var ruta_actual := ""
 var pausa_abierta := false
@@ -65,9 +69,9 @@ func _crear_interfaz() -> void:
 	panel.anchor_right = 0.5
 	panel.anchor_bottom = 0.5
 	panel.offset_left = -290.0
-	panel.offset_top = -215.0
+	panel.offset_top = -265.0
 	panel.offset_right = 290.0
-	panel.offset_bottom = 215.0
+	panel.offset_bottom = 265.0
 	panel.process_mode = Node.PROCESS_MODE_ALWAYS
 	capa.add_child(panel)
 
@@ -79,8 +83,8 @@ func _crear_interfaz() -> void:
 
 	var caja := VBoxContainer.new()
 	caja.position = Vector2(50, 46)
-	caja.size = Vector2(480, 340)
-	caja.add_theme_constant_override("separation", 28)
+	caja.size = Vector2(480, 430)
+	caja.add_theme_constant_override("separation", 24)
 	panel.add_child(caja)
 
 	titulo = Label.new()
@@ -100,6 +104,10 @@ func _crear_interfaz() -> void:
 	boton_continuar = _crear_boton("Continuar")
 	boton_continuar.pressed.connect(func(): _cerrar_pausa(true))
 	caja.add_child(boton_continuar)
+
+	boton_reiniciar = _crear_boton("Reiniciar")
+	boton_reiniciar.pressed.connect(_reiniciar_minijuego)
+	caja.add_child(boton_reiniciar)
 
 	boton_lobby = _crear_boton("Lobby")
 	boton_lobby.pressed.connect(_volver_al_lobby)
@@ -144,6 +152,17 @@ func _volver_al_lobby() -> void:
 	get_tree().change_scene_to_file(RUTA_LOBBY)
 
 
+func _reiniciar_minijuego() -> void:
+	var ruta_reinicio := _obtener_ruta_reinicio()
+	if ruta_reinicio.is_empty():
+		_cerrar_pausa(true)
+		return
+
+	_reiniciar_estado_modulo(ruta_reinicio)
+	_cerrar_pausa(false)
+	get_tree().change_scene_to_file(ruta_reinicio)
+
+
 func _actualizar_visibilidad() -> void:
 	var visible := _escena_permite_pausa() and not pausa_abierta
 	if boton_pausa:
@@ -161,3 +180,21 @@ func _escena_permite_pausa() -> bool:
 		if ruta_actual.begins_with(ruta):
 			return false
 	return true
+
+
+func _obtener_ruta_reinicio() -> String:
+	if ruta_actual.begins_with("res://modulos/minijuego_1/"):
+		return RUTA_MINIJUEGO_1
+	if ruta_actual.begins_with("res://modulos/minijuego_3_plataforma/"):
+		return RUTA_PLATAFORMA
+	if ruta_actual.begins_with("res://modulos/minijuego_4_flappy/"):
+		return RUTA_FLAPPY
+	return ""
+
+
+func _reiniciar_estado_modulo(ruta_reinicio: String) -> void:
+	if ruta_reinicio == RUTA_MINIJUEGO_1 and has_node("/root/GameManager"):
+		GameManager.reset()
+	elif ruta_reinicio == RUTA_PLATAFORMA and has_node("/root/ControladorGlobal"):
+		ControladorGlobal.nivel = 1
+		ControladorGlobal.muertes = 0

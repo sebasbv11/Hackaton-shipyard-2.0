@@ -5,8 +5,8 @@ const ACTION_RIGHT := "derecha"
 const ACTION_JUMP := "saltar"
 
 @export var ruta_minijuego_1 := "res://modulos/minijuego_1/escenas/minijuego_1/intro.tscn"
-@export var ruta_minijuego_3 := "res://modulos/minijuego_3_plataforma/escenas/escena_principal/escena_principal.tscn"
-@export var ruta_minijuego_4 := "res://modulos/minijuego_4_flappy/escenas/minijuego_4_flappy/FlappyPescador.tscn"
+@export var ruta_minijuego_2_plataforma := "res://modulos/minijuego_3_plataforma/escenas/escena_principal/escena_principal.tscn"
+@export var ruta_minijuego_3_flappy := "res://modulos/minijuego_4_flappy/escenas/minijuego_4_flappy/FlappyPescador.tscn"
 @export var animacion: AnimatedSprite2D
 @export var mensaje: Label
 
@@ -19,10 +19,9 @@ var _ground_y := 1030.0
 var _facing_left := false
 var _active_boat := -1
 var _boats := [
-	{"id": 1, "x": 100.0, "title": "Minijuego 1", "status": "Disponible"},
-	{"id": 2, "x": 275.0, "title": "Minijuego 2", "status": "Pendiente"},
-	{"id": 3, "x": 450.0, "title": "Plataforma", "status": "Disponible"},
-	{"id": 4, "x": 625.0, "title": "Flappy", "status": "Disponible"}
+	{"id": 1, "x": 150.0, "title": "Minijuego 1", "status": "Disponible"},
+	{"id": 2, "x": 360.0, "title": "Plataforma", "status": "Disponible"},
+	{"id": 3, "x": 570.0, "title": "Flappy", "status": "Disponible"}
 ]
 var _pressed_actions := {}
 
@@ -101,7 +100,7 @@ func _draw_boats() -> void:
 		draw_rect(Rect2(x - 60.0, 548.0, 120.0, 42.0), Color("#b45f2b"))
 		draw_rect(Rect2(x - 40.0, 506.0, 80.0, 56.0), Color("#e8c37a"))
 		draw_rect(Rect2(x - 5.0, 428.0, 10.0, 100.0), Color("#4d2d18"))
-		var sail_color := Color("#f4e4bc") if int(boat.id) == 2 else Color("#d94f3d")
+		var sail_color := Color("#d94f3d")
 		draw_polygon(
 			PackedVector2Array([Vector2(x + 8.0, 438.0), Vector2(x + 78.0, 478.0), Vector2(x + 8.0, 520.0)]),
 			PackedColorArray([sail_color, sail_color, sail_color])
@@ -142,11 +141,9 @@ func _update_active_boat() -> void:
 	if _active_boat == 1:
 		mensaje.text = "Barco 1: toca OK para entrar al minijuego 1."
 	elif _active_boat == 2:
-		mensaje.text = "Barco 2: minijuego pendiente de conectar."
+		mensaje.text = "Barco 2: toca OK para entrar al minijuego de plataforma."
 	elif _active_boat == 3:
-		mensaje.text = "Barco 3: toca OK para entrar al minijuego de plataforma."
-	elif _active_boat == 4:
-		mensaje.text = "Barco 4: toca OK para entrar a Flappy Pescador."
+		mensaje.text = "Barco 3: toca OK para entrar a Flappy Pescador."
 	else:
 		mensaje.text = "Camina al barco 1 y toca OK para entrar al minijuego 1."
 
@@ -154,13 +151,13 @@ func _update_active_boat() -> void:
 func _interact() -> void:
 	if _active_boat == 1 and not ruta_minijuego_1.is_empty():
 		get_tree().change_scene_to_file(ruta_minijuego_1)
-	elif _active_boat == 3 and not ruta_minijuego_3.is_empty():
+	elif _active_boat == 2 and not ruta_minijuego_2_plataforma.is_empty():
 		_reiniciar_progreso_plataforma()
-		get_tree().change_scene_to_file(ruta_minijuego_3)
-	elif _active_boat == 4 and not ruta_minijuego_4.is_empty():
-		get_tree().change_scene_to_file(ruta_minijuego_4)
+		get_tree().change_scene_to_file(ruta_minijuego_2_plataforma)
+	elif _active_boat == 3 and not ruta_minijuego_3_flappy.is_empty():
+		get_tree().change_scene_to_file(ruta_minijuego_3_flappy)
 	elif is_instance_valid(mensaje):
-		mensaje.text = "Ese barco aun no tiene minijuego conectado."
+		mensaje.text = "Selecciona un barco disponible."
 
 
 func _reiniciar_progreso_plataforma() -> void:

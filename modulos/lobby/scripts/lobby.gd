@@ -21,9 +21,9 @@ var _ground_y := 560.0
 var _facing_left := false
 var _active_boat := -1
 var _boats := [
-	{"id": 1, "x": 250.0, "title": "Minijuego 1", "status": "Disponible"},
-	{"id": 2, "x": 640.0, "title": "Plataforma", "status": "Disponible"},
-	{"id": 3, "x": 1030.0, "title": "Flappy", "status": "Disponible"}
+	{"id": 1, "x": 250.0, "title": "Minijuego 1"},
+	{"id": 2, "x": 640.0, "title": "Plataforma"},
+	{"id": 3, "x": 1030.0, "title": "Flappy"}
 ]
 var _pressed_actions := {}
 
@@ -108,7 +108,6 @@ func _draw_boats() -> void:
 			PackedColorArray([sail_color, sail_color, sail_color])
 		)
 		draw_string(ThemeDB.fallback_font, Vector2(x - 72.0, 398.0), str(boat.title), HORIZONTAL_ALIGNMENT_LEFT, 150.0, 24, Color.WHITE)
-		draw_string(ThemeDB.fallback_font, Vector2(x - 54.0, 428.0), str(boat.status), HORIZONTAL_ALIGNMENT_LEFT, 120.0, 18, Color("#f4e4bc"))
 
 
 func _update_player_visual() -> void:

@@ -1,16 +1,5 @@
 extends Node
 
-const ESCENAS_VERTICALES := [
-	"res://modulos/menu_principal/",
-]
-const ESCENAS_HORIZONTALES := [
-	"res://modulos/lobby/",
-	"res://modulos/minijuego_1/",
-	"res://modulos/minijuego_3_plataforma/",
-	"res://modulos/minijuego_4_flappy/",
-]
-const ESCENA_RESULTADO := "res://modulos/minijuego_1/escenas/minijuego_1/resultado.tscn"
-const TAMANO_VERTICAL := Vector2i(720, 1280)
 const TAMANO_HORIZONTAL := Vector2i(1280, 720)
 
 var _ruta_actual := ""
@@ -37,25 +26,10 @@ func _actualizar_orientacion() -> void:
 		return
 
 	_ruta_actual = ruta
-	_requiere_horizontal = _es_horizontal(ruta)
-	get_window().content_scale_size = TAMANO_HORIZONTAL if _requiere_horizontal else TAMANO_VERTICAL
+	_requiere_horizontal = true
+	get_window().content_scale_size = TAMANO_HORIZONTAL
 	if _es_dispositivo_movil():
-		if _requiere_horizontal:
-			DisplayServer.screen_set_orientation(DisplayServer.SCREEN_SENSOR_LANDSCAPE)
-		else:
-			DisplayServer.screen_set_orientation(DisplayServer.SCREEN_SENSOR_PORTRAIT)
-
-
-func _es_horizontal(ruta: String) -> bool:
-	if ruta == ESCENA_RESULTADO:
-		return true
-	for prefijo in ESCENAS_HORIZONTALES:
-		if ruta.begins_with(prefijo):
-			return true
-	for prefijo in ESCENAS_VERTICALES:
-		if ruta.begins_with(prefijo):
-			return false
-	return false
+		DisplayServer.screen_set_orientation(DisplayServer.SCREEN_SENSOR_LANDSCAPE)
 
 
 func _crear_aviso_giro() -> void:

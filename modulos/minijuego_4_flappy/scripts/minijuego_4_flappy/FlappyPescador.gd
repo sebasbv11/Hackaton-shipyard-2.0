@@ -165,7 +165,7 @@ func _spawn_net() -> void:
 	})
 
 func _update_net_motion(net: Dictionary) -> void:
-	if not bool(net.get("moving", false)):
+	if not bool(net.get("moving", false)) and score < MOVING_NET_SCORE:
 		return
 	var offset := sin(frame * float(net["motion_speed"]) + float(net["motion_phase"])) * MOVING_NET_AMPLITUDE
 	var base_top := float(net["base_top_h"])

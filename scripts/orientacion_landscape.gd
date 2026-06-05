@@ -38,6 +38,8 @@ func _refresh() -> void:
 
 
 func _should_block_portrait() -> bool:
+	if _is_flappy_scene():
+		return false
 	if not _is_mobile_like():
 		return false
 	var size := get_viewport().get_visible_rect().size
@@ -48,6 +50,14 @@ func _should_block_portrait() -> bool:
 
 func _is_mobile_like() -> bool:
 	return OS.has_feature("mobile") or OS.has_feature("android") or OS.has_feature("ios")
+
+
+func _is_flappy_scene() -> bool:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return false
+	var path := scene.scene_file_path
+	return path.ends_with("FlappyPescador.tscn") or scene.name == "FlappyPescador"
 
 
 func _build_overlay() -> void:

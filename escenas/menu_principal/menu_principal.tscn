@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://67bggxbecjc1"]
+[gd_scene format=3 uid="uid://67bggxbecjc1"]
 
 [ext_resource type="Theme" uid="uid://cyxbuspmwya6m" path="res://temas/boton_menu_principal.tres" id="1_1tgsf"]
 [ext_resource type="PackedScene" uid="uid://dc6cpdwni6fxq" path="res://escenas/controlador_partida/controlador_partida.tscn" id="1_w4esp"]
@@ -19,17 +19,21 @@ initial_velocity_min = 50.0
 initial_velocity_max = 100.0
 gravity = Vector3(0, 0, 0)
 
-[node name="MenuPrincipal" type="Control"]
+[node name="MenuPrincipal" type="Control" unique_id=179013152]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 4.0
+offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ControladorPartida" parent="." instance=ExtResource("1_w4esp")]
+[node name="ControladorPartida" parent="." unique_id=984585116 instance=ExtResource("1_w4esp")]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=721084880]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -44,7 +48,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="Jugar" type="Button" parent="VBoxContainer"]
+[node name="Jugar" type="Button" parent="VBoxContainer" unique_id=870495635]
 layout_mode = 2
 theme = ExtResource("1_1tgsf")
 theme_override_styles/normal = ExtResource("2_00m27")
@@ -55,7 +59,7 @@ text = "Jugar"
 script = ExtResource("6_hkuy5")
 escena_principal = ExtResource("7_7mlcq")
 
-[node name="Cargar" type="Button" parent="VBoxContainer" node_paths=PackedStringArray("controlador_partida", "boton_jugar")]
+[node name="Cargar" type="Button" parent="VBoxContainer" unique_id=578840686 node_paths=PackedStringArray("controlador_partida", "boton_jugar")]
 layout_mode = 2
 theme = ExtResource("1_1tgsf")
 theme_override_styles/normal = ExtResource("2_00m27")
@@ -67,7 +71,7 @@ script = ExtResource("9_cceyl")
 controlador_partida = NodePath("../../ControladorPartida")
 boton_jugar = NodePath("../Jugar")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=685856383]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -78,7 +82,7 @@ offset_bottom = 20.0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Control"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Control" unique_id=424833450]
 amount = 500
 lifetime = 20.0
 preprocess = 20.0

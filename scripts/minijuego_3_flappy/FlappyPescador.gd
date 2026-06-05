@@ -1,21 +1,21 @@
 extends Node2D
 
 const SAVE_PATH := "user://flappy_pescador_manta.save"
-const W := 1280.0
-const H := 720.0
-const HORIZON := 288.0
-const PLAYER_X := 330.0
-const PLAYER_RADIUS := 28.0
+const W := 720.0
+const H := 1280.0
+const HORIZON := 510.0
+const PLAYER_X := 185.0
+const PLAYER_RADIUS := 31.0
 const GRAVITY := 1500.0
 const FLAP_FORCE := -525.0
-const NET_W := 78.0
-const START_GAP := 220.0
-const MIN_GAP := 165.0
+const NET_W := 88.0
+const START_GAP := 315.0
+const MIN_GAP := 235.0
 const START_SPEED := 245.0
 const MAX_SPEED := 405.0
 const MAX_SCORE := 15
 const MOVING_NET_SCORE := 10
-const MOVING_NET_AMPLITUDE := 58.0
+const MOVING_NET_AMPLITUDE := 82.0
 const LOBBY_SCENE := "res://escenas/lobby/lobby.tscn"
 
 enum State { START, PLAYING, GAME_OVER, PAUSED, COMPLETE }
@@ -145,8 +145,8 @@ func _current_speed() -> float:
 
 func _spawn_net() -> void:
 	var gap := _current_gap()
-	var center := randf_range(220.0, 1060.0) + sin(frame * 1.7 + float(score)) * 45.0
-	center = clamp(center, 180.0 + gap * 0.5, W - 180.0 - gap * 0.5)
+	var center := randf_range(330.0, 835.0) + sin(frame * 1.7 + float(score)) * 55.0
+	center = clamp(center, 250.0 + gap * 0.5, 1015.0 - gap * 0.5)
 	var moving := score >= MOVING_NET_SCORE
 	nets.append({
 		"x": W + 35.0,
@@ -168,19 +168,19 @@ func _update_net_motion(net: Dictionary) -> void:
 	var base_top := float(net["base_top_h"])
 	var base_bottom := float(net["base_bottom_y"])
 	var gap := base_bottom - base_top
-	var top_h := clampf(base_top + offset, 72.0, H - 120.0 - gap)
+	var top_h := clampf(base_top + offset, 120.0, H - 170.0 - gap)
 	net["top_h"] = top_h
 	net["bottom_y"] = top_h + gap
 
 func _hit_something() -> bool:
-	if player_y - PLAYER_RADIUS < 12.0 or player_y + PLAYER_RADIUS > H - 58.0:
+	if player_y - PLAYER_RADIUS < 12.0 or player_y + PLAYER_RADIUS > H - 85.0:
 		return true
 	var player := Rect2(PLAYER_X - PLAYER_RADIUS + 7.0, player_y - PLAYER_RADIUS + 5.0, PLAYER_RADIUS * 1.65, PLAYER_RADIUS * 1.65)
 	for net in nets:
 		var x := float(net["x"])
 		var top_rect := Rect2(x, 0.0, NET_W, float(net["top_h"]))
 		var bottom_y := float(net["bottom_y"])
-		var bottom_rect := Rect2(x, bottom_y, NET_W, H - bottom_y - 48.0)
+		var bottom_rect := Rect2(x, bottom_y, NET_W, H - bottom_y - 70.0)
 		if player.intersects(top_rect) or player.intersects(bottom_rect):
 			return true
 	return false
@@ -227,14 +227,14 @@ func _draw() -> void:
 		draw_rect(Rect2(Vector2.ZERO, Vector2(W, H)), Color(1.0, 0.95, 0.65, flash * 0.23))
 
 func _draw_sky() -> void:
-	draw_rect(Rect2(0, 0, W, 120), Color("#35256f"))
-	draw_rect(Rect2(0, 120, W, 100), Color("#8a4090"))
-	draw_rect(Rect2(0, 220, W, HORIZON - 220), Color("#f27639"))
-	draw_circle(Vector2(W - 140.0, HORIZON - 72.0), 62.0, Color(1.0, 0.67, 0.22, 0.22))
-	draw_circle(Vector2(W - 140.0, HORIZON - 72.0), 32.0, Color("#ffd166"))
+	draw_rect(Rect2(0, 0, W, 170), Color("#35256f"))
+	draw_rect(Rect2(0, 170, W, 170), Color("#8a4090"))
+	draw_rect(Rect2(0, 340, W, HORIZON - 340), Color("#f27639"))
+	draw_circle(Vector2(W - 120.0, HORIZON - 105.0), 78.0, Color(1.0, 0.67, 0.22, 0.22))
+	draw_circle(Vector2(W - 120.0, HORIZON - 105.0), 39.0, Color("#ffd166"))
 	for i in range(36):
 		var x := fposmod(float(i * 97) + frame * 5.0, W)
-		var y := 24.0 + fposmod(float(i * 53), 140.0)
+		var y := 30.0 + fposmod(float(i * 53), 235.0)
 		draw_circle(Vector2(x, y), 1.5 + float(i % 3) * 0.5, Color(1, 0.96, 0.82, 0.15))
 
 func _draw_manta_coast() -> void:
@@ -243,8 +243,8 @@ func _draw_manta_coast() -> void:
 		var bx := fposmod(float(i * 74) - frame * 14.0, W + 80.0) - 40.0
 		var bh := 35.0 + float((i * 19) % 62)
 		draw_rect(Rect2(bx, HORIZON - 64.0 - bh, 46.0, bh), Color(0.08, 0.05, 0.15, 0.78))
-	_draw_palm(Vector2(110, HORIZON - 28.0), 0.9, 1.0)
-	_draw_palm(Vector2(W - 110, HORIZON - 26.0), 0.85, -1.0)
+	_draw_palm(Vector2(74, HORIZON - 35.0), 1.05, 1.0)
+	_draw_palm(Vector2(630, HORIZON - 32.0), 1.0, -1.0)
 
 func _draw_palm(base: Vector2, scale: float, lean: float) -> void:
 	var trunk := PackedVector2Array([
@@ -290,7 +290,7 @@ func _draw_nets() -> void:
 	for net in nets:
 		_draw_net(float(net["x"]), 0.0, NET_W, float(net["top_h"]), true, float(net["phase"]))
 		var by := float(net["bottom_y"])
-		_draw_net(float(net["x"]), by, NET_W, H - by - 48.0, false, float(net["phase"]))
+		_draw_net(float(net["x"]), by, NET_W, H - by - 70.0, false, float(net["phase"]))
 
 func _draw_net(x: float, y: float, w: float, h: float, from_top: bool, phase: float) -> void:
 	if h <= 8.0:
@@ -350,14 +350,14 @@ func _update_splashes(delta: float) -> void:
 func _create_background_life() -> void:
 	for i in range(8):
 		fishes.append({
-			"pos": Vector2(randf_range(0, W), randf_range(HORIZON + 120, H - 80)),
+			"pos": Vector2(randf_range(0, W), randf_range(HORIZON + 240, H - 150)),
 			"speed": randf_range(28.0, 70.0),
 			"size": randf_range(7.0, 16.0),
 			"color": [Color("#ff8c42"), Color("#40e0d0"), Color("#ffd166"), Color("#ff6b9d")].pick_random()
 		})
 	for i in range(5):
 		gulls.append({
-			"pos": Vector2(randf_range(0, W), randf_range(48, 160)),
+			"pos": Vector2(randf_range(0, W), randf_range(70, 230)),
 			"speed": randf_range(24.0, 54.0)
 		})
 
@@ -367,28 +367,28 @@ func _update_background(delta: float) -> void:
 		p.x -= float(fish["speed"]) * delta
 		if p.x < -40.0:
 			p.x = W + 40.0
-			p.y = randf_range(HORIZON + 120, H - 80)
+			p.y = randf_range(HORIZON + 240, H - 150)
 		fish["pos"] = p
 	for gull in gulls:
 		var p: Vector2 = gull["pos"]
 		p.x += float(gull["speed"]) * delta
 		if p.x > W + 45.0:
 			p.x = -45.0
-			p.y = randf_range(48, 160)
+			p.y = randf_range(70, 230)
 		gull["pos"] = p
 
 func _create_ui() -> void:
 	var layer := CanvasLayer.new()
 	add_child(layer)
 	score_label = Label.new()
-	score_label.position = Vector2(0, 12)
-	score_label.size = Vector2(W, 52)
+	score_label.position = Vector2(0, 28)
+	score_label.size = Vector2(W, 70)
 	score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	score_label.add_theme_font_size_override("font_size", 58)
 	score_label.add_theme_color_override("font_color", Color.WHITE)
 	layer.add_child(score_label)
 	best_label = Label.new()
-	best_label.position = Vector2(24, 64)
+	best_label.position = Vector2(24, 104)
 	best_label.size = Vector2(W - 48, 38)
 	best_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	best_label.add_theme_font_size_override("font_size", 24)
@@ -396,19 +396,12 @@ func _create_ui() -> void:
 	layer.add_child(best_label)
 	var pause_button := Button.new()
 	pause_button.text = "II"
-	pause_button.position = Vector2(W - 88, 12)
+	pause_button.position = Vector2(W - 92, 28)
 	pause_button.size = Vector2(66, 58)
 	pause_button.add_theme_font_size_override("font_size", 24)
 	pause_button.pressed.connect(Callable(self, "toggle_pause"))
 	layer.add_child(pause_button)
-	var flap_button := Button.new()
-	flap_button.text = "SALTAR"
-	flap_button.position = Vector2(W - 118.0, H - 86.0)
-	flap_button.size = Vector2(100.0, 68.0)
-	flap_button.add_theme_font_size_override("font_size", 22)
-	flap_button.pressed.connect(Callable(self, "flap"))
-	layer.add_child(flap_button)
-	title_panel = _make_panel("Flappy Pescador", "Manta, Ecuador\nToca, clic o SALTAR para volar.\nEvita las redes en la bahia.", "Toca para comenzar")
+	title_panel = _make_panel("Flappy Pescador", "Manta, Ecuador\nToca, clic o espacio para saltar.\nEvita las redes y navega sobre el Pacifico.", "Toca para comenzar")
 	layer.add_child(title_panel)
 	over_panel = _make_panel("", "", "")
 	over_panel.visible = false
@@ -419,8 +412,8 @@ func _create_ui() -> void:
 
 func _make_panel(title: String, body: String, hint_text: String) -> Panel:
 	var panel := Panel.new()
-	panel.position = Vector2(W * 0.5 - 290.0, H * 0.5 - 165.0)
-	panel.size = Vector2(580, 330)
+	panel.position = Vector2(70, 315)
+	panel.size = Vector2(580, 430)
 	var box := VBoxContainer.new()
 	box.name = "Box"
 	box.position = Vector2(36, 34)

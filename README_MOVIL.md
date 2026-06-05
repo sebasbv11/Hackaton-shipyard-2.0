@@ -17,8 +17,9 @@ Juego 2D en **orientacion horizontal (landscape)** para movil, escritorio y expo
 | **Joystick** (esquina inferior izquierda) | Caminar izquierda / derecha |
 | **^ Saltar** (esquina inferior derecha) | Saltar |
 | **OK** (lobby, derecha) | Interactuar con barcos |
-| **SALTAR** (Flappy, derecha) | Impulso / aleteo |
-| Teclado | Flechas o A/D + Espacio |
+| Teclado | Flechas o A/D + Espacio; en Flappy: toque/clic/espacio |
+
+**Flappy Pescador** sigue siendo **vertical (720x1280)**. Se muestra centrado con bandas laterales dentro del proyecto landscape; en el movil puedes jugarlo en vertical sin el aviso de “gira el dispositivo”.
 
 ### Movil en vertical
 

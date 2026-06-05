@@ -1,6 +1,37 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scripts/minijuego_3_flappy/FlappyPescador.gd" id="1_script"]
+[ext_resource type="Script" path="res://escenas/minijuego_3_flappy/flappy_shell.gd" id="1_shell"]
+[ext_resource type="Script" path="res://scripts/minijuego_3_flappy/FlappyPescador.gd" id="2_game"]
 
-[node name="FlappyPescador" type="Node2D"]
-script = ExtResource("1_script")
+[node name="FlappyPescador" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_shell")
+
+[node name="Fondo" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0392157, 0.145098, 0.25098, 1)
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 1280.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="ViewportContainer"]
+handle_input_locally = false
+size = Vector2i(720, 1280)
+render_target_update_mode = 4
+
+[node name="Juego" type="Node2D" parent="ViewportContainer/SubViewport"]
+script = ExtResource("2_game")

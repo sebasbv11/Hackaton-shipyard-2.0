@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0a2540">
+  <meta name="screen-orientation" content="landscape">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
@@ -13,38 +14,57 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div id="rotate-overlay" class="rotate-overlay" hidden aria-live="polite">
+    <div class="rotate-inner">
+      <div class="rotate-icon" aria-hidden="true">
+        <span class="rotate-phone"></span>
+        <span class="rotate-arrow">↻</span>
+      </div>
+      <h2>Gira tu dispositivo</h2>
+      <p>Manta se juega en horizontal. Gira el teléfono para continuar.</p>
+    </div>
+  </div>
+
   <div id="app" class="mobile-app">
 
     <div class="game-screen" id="game-screen">
-      <canvas id="game-canvas" aria-label="Área de juego"></canvas>
+      <div class="hud-layer" aria-hidden="false">
+        <header class="hud-bar">
+          <div class="hud-chip"><span>Niv</span><strong id="hud-level">1/4</strong></div>
+          <div class="hud-chip"><span>Pts</span><strong id="hud-score">0</strong></div>
+          <div class="hud-chip"><span>Vidas</span><strong id="hud-lives">3</strong></div>
+          <div class="hud-chip hud-chip-wide"><span>Meta</span><strong id="hud-goal">—</strong></div>
+        </header>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+      </div>
 
-      <header class="hud-bar">
-        <div class="hud-chip"><span>Niv</span><strong id="hud-level">1/4</strong></div>
-        <div class="hud-chip"><span>Pts</span><strong id="hud-score">0</strong></div>
-        <div class="hud-chip"><span>Vidas</span><strong id="hud-lives">3</strong></div>
-        <div class="hud-chip hud-chip-wide"><span>Meta</span><strong id="hud-goal">—</strong></div>
-      </header>
-      <div class="progress-wrap">
-        <div class="progress-bar" id="progress-bar"></div>
+      <div class="game-viewport" id="game-viewport">
+        <canvas id="game-canvas" aria-label="Área de juego"></canvas>
       </div>
 
       <div class="touch-controls" id="touch-controls" hidden>
-        <div class="control-row" id="control-lanes" hidden>
-          <button type="button" class="btn-lane" id="btn-lane-left" aria-label="Carril izquierdo">◀</button>
-          <button type="button" class="btn-lane" id="btn-lane-right" aria-label="Carril derecho">▶</button>
-        </div>
-        <button type="button" class="btn-net" id="btn-net" hidden>LANZAR RED</button>
-        <div class="joystick-wrap" id="joystick-wrap">
-          <div class="joystick" id="joystick">
-            <div class="joystick-base"></div>
-            <div class="joystick-knob" id="joystick-knob"></div>
+        <div class="controls-left">
+          <div class="joystick-wrap" id="joystick-wrap">
+            <div class="joystick" id="joystick">
+              <div class="joystick-base"></div>
+              <div class="joystick-knob" id="joystick-knob"></div>
+            </div>
           </div>
+          <p class="touch-hint" id="touch-hint">Arrastra para navegar</p>
         </div>
-        <p class="touch-hint" id="touch-hint">Arrastra para navegar</p>
+        <div class="controls-right" id="controls-right">
+          <div class="control-row" id="control-lanes" hidden>
+            <button type="button" class="btn-lane" id="btn-lane-left" aria-label="Carril izquierdo">◀</button>
+            <button type="button" class="btn-lane" id="btn-lane-right" aria-label="Carril derecho">▶</button>
+          </div>
+          <button type="button" class="btn-net" id="btn-net" hidden>LANZAR RED</button>
+        </div>
       </div>
     </div>
 
-    <div class="guide-modal" id="guide-modal">
+    <div class="guide-modal hidden" id="guide-modal">
       <div class="guide-modal-inner">
         <div class="guide-avatar" id="guide-avatar" aria-hidden="true"></div>
         <h2 id="guide-name">—</h2>
@@ -58,23 +78,23 @@
   </div>
 
   <div class="overlay" id="overlay-start">
-    <div class="modal">
+    <div class="modal modal-landscape">
       <div class="app-icon" aria-hidden="true">⛵</div>
       <h2>Manta: Travesía por Jocay</h2>
-      <p>Aplicación móvil. Navega en balsas manteñas por la bahía de Manta.</p>
+      <p>Juego horizontal. Navega en balsas manteñas por la bahía de Manta.</p>
       <ul class="level-preview">
         <li><strong>1</strong> Lluvia de esmeraldas (atrapar)</li>
         <li><strong>2</strong> Canales de arrecife (esquivar)</li>
         <li><strong>3</strong> Ruta comercial (3 carriles)</li>
         <li><strong>4</strong> Red de rescate (peces)</li>
       </ul>
-      <p class="modal-tip">Cada nivel es un juego diferente en la bahía de Manta.</p>
+      <p class="modal-tip">Gira el teléfono en horizontal o juega en pantalla ancha.</p>
       <button type="button" class="btn btn-primary btn-large" id="btn-play">Jugar</button>
     </div>
   </div>
 
   <div class="overlay hidden" id="overlay-end">
-    <div class="modal modal-win">
+    <div class="modal modal-win modal-landscape">
       <h2 id="end-title">¡Victoria!</h2>
       <p id="end-message"></p>
       <p class="end-score">Puntuación: <strong id="end-score">0</strong></p>

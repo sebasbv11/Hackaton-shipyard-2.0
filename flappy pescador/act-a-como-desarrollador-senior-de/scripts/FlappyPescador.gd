@@ -42,6 +42,10 @@ var over_best: Label
 
 func _ready() -> void:
 	randomize()
+	# Optimizaciones para mobile
+	if OS.get_name() in ["Android", "iOS"]:
+		get_window().set_flag(Window.FLAG_EXTEND_TO_TITLE, false)
+		DisplayServer.screen_set_keep_on(true)
 	_load_best()
 	_create_background_life()
 	_create_audio()
@@ -59,14 +63,25 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	var pointer_pressed := false
+	var touch_pos := Vector2.ZERO
+	
 	if event is InputEventScreenTouch:
 		var touch := event as InputEventScreenTouch
 		pointer_pressed = touch.pressed
+		touch_pos = touch.position
 	elif event is InputEventMouseButton:
 		var mouse := event as InputEventMouseButton
 		pointer_pressed = mouse.pressed and mouse.button_index == MOUSE_BUTTON_LEFT
-	if event.is_action_pressed("flap") or pointer_pressed:
+		touch_pos = mouse.position
+	
+	# Ignorar clics en el botón de pausa para el salto
+	var pause_button_area := Rect2(W - 75, 18, 65, 65)
+	if pointer_pressed and not pause_button_area.has_point(touch_pos):
+		if event.is_action_pressed("flap") or (event is InputEventScreenTouch) or (event is InputEventMouseButton):
+			flap()
+	elif event.is_action_pressed("flap"):
 		flap()
+	
 	if event.is_action_pressed("pause_game"):
 		toggle_pause()
 
@@ -340,28 +355,32 @@ func _update_background(delta: float) -> void:
 func _create_ui() -> void:
 	var layer := CanvasLayer.new()
 	add_child(layer)
+	# Score label - aumentado y adaptado para vertical
 	score_label = Label.new()
-	score_label.position = Vector2(0, 28)
-	score_label.size = Vector2(W, 70)
+	score_label.position = Vector2(0, 20)
+	score_label.size = Vector2(W, 80)
 	score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	score_label.add_theme_font_size_override("font_size", 58)
+	score_label.add_theme_font_size_override("font_size", 72)
 	score_label.add_theme_color_override("font_color", Color.WHITE)
 	layer.add_child(score_label)
+	# Best score label
 	best_label = Label.new()
-	best_label.position = Vector2(24, 104)
-	best_label.size = Vector2(W - 48, 38)
+	best_label.position = Vector2(12, 102)
+	best_label.size = Vector2(W - 24, 45)
 	best_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	best_label.add_theme_font_size_override("font_size", 24)
+	best_label.add_theme_font_size_override("font_size", 28)
 	best_label.add_theme_color_override("font_color", Color("#fff3b0"))
 	layer.add_child(best_label)
+	# Pause button - más grande para touchscreen
 	var pause_button := Button.new()
-	pause_button.text = "II"
-	pause_button.position = Vector2(W - 92, 28)
-	pause_button.size = Vector2(66, 58)
-	pause_button.add_theme_font_size_override("font_size", 24)
+	pause_button.text = "⏸"
+	pause_button.position = Vector2(W - 75, 18)
+	pause_button.size = Vector2(65, 65)
+	pause_button.add_theme_font_size_override("font_size", 32)
 	pause_button.pressed.connect(Callable(self, "toggle_pause"))
 	layer.add_child(pause_button)
-	title_panel = _make_panel("Flappy Pescador", "Manta, Ecuador\nToca, clic o espacio para saltar.\nEvita las redes y navega sobre el Pacifico.", "Toca para comenzar")
+	# Paneles optimizados para vertical
+	title_panel = _make_panel("Flappy Pescador", "Manta, Ecuador\n\nToca la pantalla para saltar\nEvita las redes y navega\nsobre el Pacífico", "TOCA PARA COMENZAR")
 	layer.add_child(title_panel)
 	over_panel = _make_panel("", "", "")
 	over_panel.visible = false
@@ -372,34 +391,38 @@ func _create_ui() -> void:
 
 func _make_panel(title: String, body: String, hint_text: String) -> Panel:
 	var panel := Panel.new()
-	panel.position = Vector2(70, 315)
-	panel.size = Vector2(580, 430)
+	# Panel centrado y optimizado para vertical
+	panel.position = Vector2(40, 380)
+	panel.size = Vector2(640, 380)
 	var box := VBoxContainer.new()
 	box.name = "Box"
-	box.position = Vector2(36, 34)
-	box.size = Vector2(508, 360)
-	box.add_theme_constant_override("separation", 18)
+	box.position = Vector2(30, 30)
+	box.size = Vector2(580, 320)
+	box.add_theme_constant_override("separation", 20)
 	panel.add_child(box)
+	# Título más grande
 	var title_label := Label.new()
 	title_label.name = "Title"
 	title_label.text = title
 	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title_label.add_theme_font_size_override("font_size", 42)
+	title_label.add_theme_font_size_override("font_size", 48)
 	title_label.add_theme_color_override("font_color", Color("#ffd166"))
 	box.add_child(title_label)
+	# Body con mejor formato
 	var body_label := Label.new()
 	body_label.name = "Body"
 	body_label.text = body
 	body_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	body_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	body_label.add_theme_font_size_override("font_size", 25)
+	body_label.add_theme_font_size_override("font_size", 26)
 	body_label.add_theme_color_override("font_color", Color("#e8f7ff"))
 	box.add_child(body_label)
+	# Hint mejorado
 	var hint := Label.new()
 	hint.name = "Hint"
 	hint.text = hint_text
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint.add_theme_font_size_override("font_size", 23)
+	hint.add_theme_font_size_override("font_size", 28)
 	hint.add_theme_color_override("font_color", Color("#40e0d0"))
 	box.add_child(hint)
 	return panel

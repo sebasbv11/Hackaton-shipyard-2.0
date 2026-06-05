@@ -12,8 +12,10 @@ config/icon="res://icon.svg"
 window/size/viewport_width=720
 window/size/viewport_height=1280
 window/handheld/orientation=1
+window/handheld/use_notch=true
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/dpi/allow_hidpi=true
 
 [input]
 flap={
@@ -22,7 +24,7 @@ flap={
 }
 pause_game={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194305,"physical_keycode":0,"key_label":0,"unicode":0,"echo":false,"script":null)]
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194305,"physical_keycode":0,"key_label":0,"unicode":0,"echo":false,"script":null), Object(InputEventGesture,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0), Object(InputEventScreenSwipe,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"direction":1)]
 }
 
 [rendering]

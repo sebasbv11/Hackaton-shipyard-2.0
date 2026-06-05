@@ -26,6 +26,7 @@ config/icon="uid://cgpuv2tx6rvhh"
 ControladorGlobal="*res://modulos/comun/scripts/controlador_global.gd"
 GameManager="*res://modulos/minijuego_1/scripts/minijuego_1/GameManager.gd"
 MenuPausa="*res://modulos/comun/scripts/menu_pausa.gd"
+OrientacionPantalla="*res://modulos/comun/scripts/orientacion_pantalla.gd"
 
 [display]
 
@@ -33,7 +34,7 @@ window/size/viewport_width=720
 window/size/viewport_height=1280
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-window/handheld/orientation=1
+window/handheld/orientation=6
 
 [input]
 

@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://d1mgcde22yams"]
+
+[ext_resource type="Script" uid="uid://b7qhfil2yft7s" path="res://scripts/GameOver.gd" id="1_go"]
+
+[node name="GameOver" type="Node2D" unique_id=1426121731]
+script = ExtResource("1_go")
+
+[node name="FondoBase" type="Polygon2D" parent="." unique_id=279085263]
+color = Color(0.04, 0.02, 0.08, 1)
+polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720)
+
+[node name="FondoGradiente" type="Polygon2D" parent="." unique_id=1767979115]
+color = Color(0.18, 0.03, 0.03, 0.7)
+polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 360, 0, 360)
+
+[node name="OceanoBajo" type="Polygon2D" parent="." unique_id=651459643]
+color = Color(0.04, 0.1, 0.28, 1)
+polygon = PackedVector2Array(0, 560, 1280, 560, 1280, 720, 0, 720)
+
+[node name="OlasDeco" type="Line2D" parent="." unique_id=1038276220]
+points = PackedVector2Array(0, 568, 80, 558, 160, 565, 240, 555, 320, 562, 400, 552, 480, 560, 560, 550, 640, 558, 720, 548, 800, 556, 880, 546, 960, 554, 1040, 544, 1120, 552, 1200, 543, 1280, 550)
+width = 3.0
+default_color = Color(0.18, 0.42, 0.72, 0.6)
+
+[node name="FranjaRoja" type="Polygon2D" parent="." unique_id=1170349883]
+color = Color(0.62, 0.04, 0.04, 0.4)
+polygon = PackedVector2Array(0, 290, 1280, 290, 1280, 320, 0, 320)
+
+[node name="TituloGO" type="Label" parent="." unique_id=2141996710]
+offset_top = 148.0
+offset_right = 1280.0
+offset_bottom = 240.0
+theme_override_colors/font_color = Color(0.9, 0.08, 0.08, 1)
+theme_override_font_sizes/font_size = 82
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="SubtituloGO" type="Label" parent="." unique_id=132165833]
+offset_top = 248.0
+offset_right = 1280.0
+offset_bottom = 290.0
+theme_override_colors/font_color = Color(0.72, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 20
+text = "El navegante ha caído... pero Manta te espera de nuevo"
+horizontal_alignment = 1
+
+[node name="CorazonRoto" type="Node2D" parent="." unique_id=1473951261]
+position = Vector2(640, 390)
+
+[node name="MitadIzq" type="Polygon2D" parent="CorazonRoto" unique_id=1115698233]
+color = Color(0.75, 0.08, 0.08, 1)
+polygon = PackedVector2Array(-38, -30, -10, -42, 0, -32, -2, 5, -22, 28, -38, 15)
+
+[node name="MitadDer" type="Polygon2D" parent="CorazonRoto" unique_id=1173984965]
+color = Color(0.62, 0.06, 0.06, 1)
+polygon = PackedVector2Array(38, -30, 10, -42, 0, -32, 2, 5, 22, 28, 38, 15)
+
+[node name="GrietaCorazon" type="Line2D" parent="CorazonRoto" unique_id=1679877163]
+points = PackedVector2Array(0, -32, 6, -18, -4, -5, 4, 8, 0, 28)
+width = 3.0
+default_color = Color(0.04, 0.02, 0.08, 1)
+
+[node name="PuntajeLabel" type="Label" parent="." unique_id=355723037]
+offset_left = 200.0
+offset_top = 450.0
+offset_right = 1080.0
+offset_bottom = 500.0
+theme_override_colors/font_color = Color(0.88, 0.88, 0.95, 1)
+theme_override_font_sizes/font_size = 28
+text = "Conchas recolectadas: 0"
+horizontal_alignment = 1
+
+[node name="BotonReiniciar" type="Button" parent="." unique_id=613058538]
+offset_left = 440.0
+offset_top = 528.0
+offset_right = 840.0
+offset_bottom = 594.0
+theme_override_colors/font_color = Color(0.95, 0.85, 0.18, 1)
+theme_override_font_sizes/font_size = 24
+text = "   ↺   Intentar de Nuevo   "
+
+[node name="FadeOverlay" type="ColorRect" parent="." unique_id=1278938726]
+z_index = 20
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
+
+[connection signal="pressed" from="BotonReiniciar" to="." method="_reiniciar"]

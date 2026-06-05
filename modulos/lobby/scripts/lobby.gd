@@ -3,6 +3,8 @@ extends Node2D
 const ACTION_LEFT := "izquierda"
 const ACTION_RIGHT := "derecha"
 const ACTION_JUMP := "saltar"
+const W := 1280.0
+const H := 720.0
 
 @export var ruta_minijuego_1 := "res://modulos/minijuego_1/escenas/minijuego_1/intro.tscn"
 @export var ruta_minijuego_2_plataforma := "res://modulos/minijuego_3_plataforma/escenas/escena_principal/escena_principal.tscn"
@@ -10,18 +12,18 @@ const ACTION_JUMP := "saltar"
 @export var animacion: AnimatedSprite2D
 @export var mensaje: Label
 
-var _player_position := Vector2(360.0, 1030.0)
+var _player_position := Vector2(640.0, 560.0)
 var _velocity := Vector2.ZERO
-var _speed := 260.0
-var _jump_speed := -560.0
+var _speed := 360.0
+var _jump_speed := -520.0
 var _gravity := 1500.0
-var _ground_y := 1030.0
+var _ground_y := 560.0
 var _facing_left := false
 var _active_boat := -1
 var _boats := [
-	{"id": 1, "x": 150.0, "title": "Minijuego 1", "status": "Disponible"},
-	{"id": 2, "x": 360.0, "title": "Plataforma", "status": "Disponible"},
-	{"id": 3, "x": 570.0, "title": "Flappy", "status": "Disponible"}
+	{"id": 1, "x": 250.0, "title": "Minijuego 1", "status": "Disponible"},
+	{"id": 2, "x": 640.0, "title": "Plataforma", "status": "Disponible"},
+	{"id": 3, "x": 1030.0, "title": "Flappy", "status": "Disponible"}
 ]
 var _pressed_actions := {}
 
@@ -29,7 +31,7 @@ var _pressed_actions := {}
 func _ready() -> void:
 	if is_instance_valid(animacion):
 		animacion.play("idle")
-		animacion.scale = Vector2(3.0, 3.0)
+		animacion.scale = Vector2(2.7, 2.7)
 		_update_player_visual()
 	if is_instance_valid(mensaje):
 		mensaje.text = "Camina al barco 1 y toca OK para entrar al minijuego 1."
@@ -39,7 +41,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis(ACTION_LEFT, ACTION_RIGHT)
 	_velocity.x = direction * _speed
-	_player_position.x = clampf(_player_position.x + _velocity.x * delta, 54.0, 666.0)
+	_player_position.x = clampf(_player_position.x + _velocity.x * delta, 70.0, W - 70.0)
 
 	if direction < 0.0:
 		_facing_left = true
@@ -72,23 +74,23 @@ func _draw() -> void:
 
 
 func _draw_background() -> void:
-	draw_rect(Rect2(Vector2.ZERO, Vector2(720.0, 1280.0)), Color("#79d5ee"))
-	draw_rect(Rect2(0.0, 360.0, 720.0, 920.0), Color("#147fa4"))
+	draw_rect(Rect2(Vector2.ZERO, Vector2(W, H)), Color("#79d5ee"))
+	draw_rect(Rect2(0.0, 250.0, W, H - 250.0), Color("#147fa4"))
 	for i in range(18):
-		var y := 390.0 + float(i) * 42.0 + sin(Time.get_ticks_msec() / 450.0 + i) * 5.0
-		draw_rect(Rect2(0.0, y, 720.0, 6.0), Color(0.70, 0.95, 1.0, 0.25))
-	draw_rect(Rect2(0.0, 825.0, 720.0, 28.0), Color("#e0bd77"))
-	draw_rect(Rect2(0.0, 853.0, 720.0, 16.0), Color("#8c5429"))
+		var y := 270.0 + float(i) * 22.0 + sin(Time.get_ticks_msec() / 450.0 + i) * 4.0
+		draw_rect(Rect2(0.0, y, W, 5.0), Color(0.70, 0.95, 1.0, 0.25))
+	draw_rect(Rect2(0.0, 448.0, W, 24.0), Color("#e0bd77"))
+	draw_rect(Rect2(0.0, 472.0, W, 14.0), Color("#8c5429"))
 
 
 func _draw_dock() -> void:
-	draw_rect(Rect2(0.0, 885.0, 720.0, 240.0), Color("#7d4b28"))
-	for x in range(0, 720, 72):
-		draw_rect(Rect2(float(x), 885.0, 56.0, 240.0), Color("#a46535"))
-		draw_rect(Rect2(float(x) + 56.0, 885.0, 6.0, 240.0), Color("#503018"))
-	for x in range(44, 720, 150):
-		draw_rect(Rect2(float(x), 820.0, 22.0, 300.0), Color("#533018"))
-		draw_rect(Rect2(float(x) - 8.0, 806.0, 38.0, 16.0), Color("#332012"))
+	draw_rect(Rect2(0.0, 500.0, W, 150.0), Color("#7d4b28"))
+	for x in range(0, int(W), 88):
+		draw_rect(Rect2(float(x), 500.0, 70.0, 150.0), Color("#a46535"))
+		draw_rect(Rect2(float(x) + 70.0, 500.0, 7.0, 150.0), Color("#503018"))
+	for x in range(56, int(W), 180):
+		draw_rect(Rect2(float(x), 430.0, 24.0, 220.0), Color("#533018"))
+		draw_rect(Rect2(float(x) - 8.0, 416.0, 40.0, 16.0), Color("#332012"))
 
 
 func _draw_boats() -> void:
@@ -96,17 +98,17 @@ func _draw_boats() -> void:
 		var x: float = boat.x
 		var active := int(boat.id) == _active_boat
 		var hull_color := Color("#f4a261") if active else Color("#7a3f24")
-		draw_rect(Rect2(x - 78.0, 585.0, 156.0, 34.0), hull_color)
-		draw_rect(Rect2(x - 60.0, 548.0, 120.0, 42.0), Color("#b45f2b"))
-		draw_rect(Rect2(x - 40.0, 506.0, 80.0, 56.0), Color("#e8c37a"))
-		draw_rect(Rect2(x - 5.0, 428.0, 10.0, 100.0), Color("#4d2d18"))
+		draw_rect(Rect2(x - 96.0, 326.0, 192.0, 36.0), hull_color)
+		draw_rect(Rect2(x - 72.0, 286.0, 144.0, 44.0), Color("#b45f2b"))
+		draw_rect(Rect2(x - 46.0, 238.0, 92.0, 58.0), Color("#e8c37a"))
+		draw_rect(Rect2(x - 5.0, 150.0, 10.0, 116.0), Color("#4d2d18"))
 		var sail_color := Color("#d94f3d")
 		draw_polygon(
-			PackedVector2Array([Vector2(x + 8.0, 438.0), Vector2(x + 78.0, 478.0), Vector2(x + 8.0, 520.0)]),
+			PackedVector2Array([Vector2(x + 8.0, 160.0), Vector2(x + 92.0, 208.0), Vector2(x + 8.0, 260.0)]),
 			PackedColorArray([sail_color, sail_color, sail_color])
 		)
-		draw_string(ThemeDB.fallback_font, Vector2(x - 54.0, 670.0), str(boat.title), HORIZONTAL_ALIGNMENT_LEFT, 120.0, 24, Color.WHITE)
-		draw_string(ThemeDB.fallback_font, Vector2(x - 42.0, 700.0), str(boat.status), HORIZONTAL_ALIGNMENT_LEFT, 100.0, 18, Color("#f4e4bc"))
+		draw_string(ThemeDB.fallback_font, Vector2(x - 72.0, 398.0), str(boat.title), HORIZONTAL_ALIGNMENT_LEFT, 150.0, 24, Color.WHITE)
+		draw_string(ThemeDB.fallback_font, Vector2(x - 54.0, 428.0), str(boat.status), HORIZONTAL_ALIGNMENT_LEFT, 120.0, 18, Color("#f4e4bc"))
 
 
 func _update_player_visual() -> void:
@@ -170,16 +172,16 @@ func _create_mobile_controls() -> void:
 	layer.name = "ControlesLobby"
 	add_child(layer)
 
-	_add_hold_button(layer, "Izquierda", "<", ACTION_LEFT, Vector2(32.0, 1110.0), Vector2(120.0, 100.0))
-	_add_hold_button(layer, "Derecha", ">", ACTION_RIGHT, Vector2(172.0, 1110.0), Vector2(120.0, 100.0))
-	_add_hold_button(layer, "Saltar", "^", ACTION_JUMP, Vector2(548.0, 1095.0), Vector2(120.0, 100.0))
+	_add_hold_button(layer, "Izquierda", "<", ACTION_LEFT, Vector2(34.0, H - 118.0), Vector2(118.0, 96.0))
+	_add_hold_button(layer, "Derecha", ">", ACTION_RIGHT, Vector2(172.0, H - 118.0), Vector2(118.0, 96.0))
+	_add_hold_button(layer, "Saltar", "^", ACTION_JUMP, Vector2(W - 168.0, H - 128.0), Vector2(136.0, 106.0))
 
 	var ok := Button.new()
 	ok.name = "Interactuar"
 	ok.text = "OK"
 	ok.focus_mode = Control.FOCUS_NONE
-	ok.position = Vector2(395.0, 1110.0)
-	ok.size = Vector2(120.0, 100.0)
+	ok.position = Vector2(W - 330.0, H - 118.0)
+	ok.size = Vector2(128.0, 96.0)
 	ok.add_theme_font_size_override("font_size", 34)
 	ok.pressed.connect(_interact)
 	layer.add_child(ok)

@@ -32,23 +32,6 @@ func _ready() -> void:
 	if GameManager.has_signal("combo_changed"):
 		GameManager.combo_changed.connect(_on_combo_changed)
 
-	var canvas_tactil = CanvasLayer.new()
-	canvas_tactil.layer = -1
-	var boton_pantalla = TouchScreenButton.new()
-	var forma_tactil = RectangleShape2D.new()
-	forma_tactil.size = Vector2(1280, 720)
-	boton_pantalla.shape = forma_tactil
-	boton_pantalla.position = Vector2(0, 0)
-	boton_pantalla.pressed.connect(func():
-		if not is_alive or not control_activo: return
-		if is_on_floor():
-			velocity.y = JUMP_VELOCITY
-		else:
-			activar_dash()
-	)
-	canvas_tactil.add_child(boton_pantalla)
-	add_child(canvas_tactil)
-
 	_crear_combo_label()
 
 func _crear_combo_label() -> void:

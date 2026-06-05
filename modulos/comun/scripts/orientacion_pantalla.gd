@@ -2,14 +2,16 @@ extends Node
 
 const ESCENAS_VERTICALES := [
 	"res://modulos/menu_principal/",
-	"res://modulos/lobby/",
-	"res://modulos/minijuego_4_flappy/",
 ]
 const ESCENAS_HORIZONTALES := [
+	"res://modulos/lobby/",
 	"res://modulos/minijuego_1/",
 	"res://modulos/minijuego_3_plataforma/",
+	"res://modulos/minijuego_4_flappy/",
 ]
 const ESCENA_RESULTADO := "res://modulos/minijuego_1/escenas/minijuego_1/resultado.tscn"
+const TAMANO_VERTICAL := Vector2i(720, 1280)
+const TAMANO_HORIZONTAL := Vector2i(1280, 720)
 
 var _ruta_actual := ""
 var _requiere_horizontal := false
@@ -36,6 +38,7 @@ func _actualizar_orientacion() -> void:
 
 	_ruta_actual = ruta
 	_requiere_horizontal = _es_horizontal(ruta)
+	get_window().content_scale_size = TAMANO_HORIZONTAL if _requiere_horizontal else TAMANO_VERTICAL
 	if _es_dispositivo_movil():
 		if _requiere_horizontal:
 			DisplayServer.screen_set_orientation(DisplayServer.SCREEN_SENSOR_LANDSCAPE)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://modulos/minijuego_1/scripts/minijuego_1/FaseDos.gd" id="1_fasedos"]
 [ext_resource type="Script" path="res://modulos/minijuego_1/scripts/minijuego_1/Boat.gd" id="2_boat"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" path="res://audio/musica_bote_pesca.wav" id="6_musica_bote"]
 [ext_resource type="AudioStream" path="res://audio/sonido_olas_mar.wav" id="7_olas_mar"]
 [ext_resource type="Script" path="res://modulos/comun/scripts/audio_loop_player.gd" id="8_audio_loop"]
+[ext_resource type="Script" path="res://modulos/comun/scripts/botones_moviles.gd" id="9_botones_moviles"]
 
 [sub_resource type="RectangleShape2D" id="barco_col"]
 size = Vector2(134, 32)
@@ -313,10 +314,21 @@ offset_left = 400.0
 offset_top = 690.0
 offset_right = 880.0
 offset_bottom = 718.0
-text = "Arriba/Abajo mover barco | ESPACIO lanzar anzuelo"
+text = "Boton PESCAR para lanzar el anzuelo"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(0.65, 0.75, 0.88, 0.75)
+
+[node name="BotonesMoviles" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("9_botones_moviles")
+modo = "minijuego_1_pesca"
 
 [connection signal="timeout" from="TemporizadorPesca" to="." method="_on_temporizador_pesca_timeout"]
 [connection signal="timeout" from="SpawnPeces" to="." method="_on_spawn_peces_timeout"]

@@ -18,13 +18,13 @@ bus = &"Musica"
 script = ExtResource("4_audio_loop")
 
 [node name="Jugador" type="Node2D" parent="."]
-position = Vector2(360, 1030)
+position = Vector2(640, 560)
 
 [node name="Animacion" type="AnimatedSprite2D" parent="Jugador"]
 texture_filter = 1
 sprite_frames = ExtResource("2_frames")
 animation = &"idle"
-scale = Vector2(3, 3)
+scale = Vector2(2.7, 2.7)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

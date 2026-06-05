@@ -1,21 +1,25 @@
 extends Node2D
 
 const SAVE_PATH := "user://flappy_pescador_manta.save"
-const W := 720.0
-const H := 1280.0
-const HORIZON := 510.0
-const PLAYER_X := 185.0
+const W := 1280.0
+const H := 720.0
+const HORIZON := 300.0
+const PLAYER_X := 250.0
 const PLAYER_RADIUS := 31.0
 const GRAVITY := 1500.0
 const FLAP_FORCE := -525.0
 const NET_W := 88.0
-const START_GAP := 315.0
-const MIN_GAP := 235.0
-const START_SPEED := 245.0
-const MAX_SPEED := 405.0
+const START_GAP := 210.0
+const MIN_GAP := 150.0
+const START_SPEED := 280.0
+const MAX_SPEED := 430.0
 const MAX_SCORE := 15
 const MOVING_NET_SCORE := 10
-const MOVING_NET_AMPLITUDE := 82.0
+const MOVING_NET_AMPLITUDE := 54.0
+const NET_CENTER_MIN := 245.0
+const NET_CENTER_MAX := 485.0
+const NET_TOP_MARGIN := 70.0
+const NET_BOTTOM_MARGIN := 85.0
 const LOBBY_SCENE := "res://modulos/lobby/escenas/lobby.tscn"
 
 enum State { START, PLAYING, GAME_OVER, PAUSED, COMPLETE }
@@ -144,8 +148,8 @@ func _current_speed() -> float:
 
 func _spawn_net() -> void:
 	var gap := _current_gap()
-	var center := randf_range(330.0, 835.0) + sin(frame * 1.7 + float(score)) * 55.0
-	center = clamp(center, 250.0 + gap * 0.5, 1015.0 - gap * 0.5)
+	var center := randf_range(NET_CENTER_MIN, NET_CENTER_MAX) + sin(frame * 1.7 + float(score)) * 28.0
+	center = clamp(center, NET_TOP_MARGIN + gap * 0.5, H - NET_BOTTOM_MARGIN - gap * 0.5)
 	var moving := score >= MOVING_NET_SCORE
 	nets.append({
 		"x": W + 35.0,
@@ -167,7 +171,7 @@ func _update_net_motion(net: Dictionary) -> void:
 	var base_top := float(net["base_top_h"])
 	var base_bottom := float(net["base_bottom_y"])
 	var gap := base_bottom - base_top
-	var top_h := clampf(base_top + offset, 120.0, H - 170.0 - gap)
+	var top_h := clampf(base_top + offset, NET_TOP_MARGIN, H - NET_BOTTOM_MARGIN - gap)
 	net["top_h"] = top_h
 	net["bottom_y"] = top_h + gap
 
@@ -227,14 +231,14 @@ func _draw() -> void:
 		draw_rect(Rect2(Vector2.ZERO, Vector2(W, H)), Color(1.0, 0.95, 0.65, flash * 0.23))
 
 func _draw_sky() -> void:
-	draw_rect(Rect2(0, 0, W, 170), Color("#35256f"))
-	draw_rect(Rect2(0, 170, W, 170), Color("#8a4090"))
-	draw_rect(Rect2(0, 340, W, HORIZON - 340), Color("#f27639"))
+	draw_rect(Rect2(0, 0, W, 105), Color("#35256f"))
+	draw_rect(Rect2(0, 105, W, 105), Color("#8a4090"))
+	draw_rect(Rect2(0, 210, W, HORIZON - 210), Color("#f27639"))
 	draw_circle(Vector2(W - 120.0, HORIZON - 105.0), 78.0, Color(1.0, 0.67, 0.22, 0.22))
 	draw_circle(Vector2(W - 120.0, HORIZON - 105.0), 39.0, Color("#ffd166"))
 	for i in range(36):
 		var x := fposmod(float(i * 97) + frame * 5.0, W)
-		var y := 30.0 + fposmod(float(i * 53), 235.0)
+		var y := 24.0 + fposmod(float(i * 53), 155.0)
 		draw_circle(Vector2(x, y), 1.5 + float(i % 3) * 0.5, Color(1, 0.96, 0.82, 0.15))
 
 func _draw_manta_coast() -> void:
@@ -243,8 +247,8 @@ func _draw_manta_coast() -> void:
 		var bx := fposmod(float(i * 74) - frame * 14.0, W + 80.0) - 40.0
 		var bh := 35.0 + float((i * 19) % 62)
 		draw_rect(Rect2(bx, HORIZON - 64.0 - bh, 46.0, bh), Color(0.08, 0.05, 0.15, 0.78))
-	_draw_palm(Vector2(74, HORIZON - 35.0), 1.05, 1.0)
-	_draw_palm(Vector2(630, HORIZON - 32.0), 1.0, -1.0)
+	_draw_palm(Vector2(92, HORIZON - 35.0), 1.05, 1.0)
+	_draw_palm(Vector2(W - 96.0, HORIZON - 32.0), 1.0, -1.0)
 
 func _draw_palm(base: Vector2, scale: float, lean: float) -> void:
 	var trunk := PackedVector2Array([
@@ -262,9 +266,9 @@ func _draw_palm(base: Vector2, scale: float, lean: float) -> void:
 
 func _draw_sea() -> void:
 	draw_rect(Rect2(0, HORIZON, W, H - HORIZON), Color("#196f85"))
-	draw_rect(Rect2(0, HORIZON, W, 155), Color(0.18, 0.74, 0.78, 0.4))
+	draw_rect(Rect2(0, HORIZON, W, 96), Color(0.18, 0.74, 0.78, 0.4))
 	for layer in range(8):
-		var y := HORIZON + 28.0 + float(layer) * 62.0
+		var y := HORIZON + 24.0 + float(layer) * 39.0
 		var points := PackedVector2Array()
 		for x in range(-20, int(W) + 42, 24):
 			var yy := y + sin(float(x) * 0.035 + frame * (1.4 + layer * 0.16)) * (7.0 + layer)
@@ -350,7 +354,7 @@ func _update_splashes(delta: float) -> void:
 func _create_background_life() -> void:
 	for i in range(8):
 		fishes.append({
-			"pos": Vector2(randf_range(0, W), randf_range(HORIZON + 240, H - 150)),
+			"pos": Vector2(randf_range(0, W), randf_range(HORIZON + 130.0, H - 90.0)),
 			"speed": randf_range(28.0, 70.0),
 			"size": randf_range(7.0, 16.0),
 			"color": [Color("#ff8c42"), Color("#40e0d0"), Color("#ffd166"), Color("#ff6b9d")].pick_random()
@@ -367,7 +371,7 @@ func _update_background(delta: float) -> void:
 		p.x -= float(fish["speed"]) * delta
 		if p.x < -40.0:
 			p.x = W + 40.0
-			p.y = randf_range(HORIZON + 240, H - 150)
+			p.y = randf_range(HORIZON + 130.0, H - 90.0)
 		fish["pos"] = p
 	for gull in gulls:
 		var p: Vector2 = gull["pos"]
@@ -381,14 +385,14 @@ func _create_ui() -> void:
 	var layer := CanvasLayer.new()
 	add_child(layer)
 	score_label = Label.new()
-	score_label.position = Vector2(0, 28)
-	score_label.size = Vector2(W, 70)
+	score_label.position = Vector2(0, 20)
+	score_label.size = Vector2(W, 62)
 	score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	score_label.add_theme_font_size_override("font_size", 58)
 	score_label.add_theme_color_override("font_color", Color.WHITE)
 	layer.add_child(score_label)
 	best_label = Label.new()
-	best_label.position = Vector2(24, 104)
+	best_label.position = Vector2(24, 84)
 	best_label.size = Vector2(W - 48, 38)
 	best_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	best_label.add_theme_font_size_override("font_size", 24)
@@ -405,19 +409,19 @@ func _create_ui() -> void:
 
 func _make_panel(title: String, body: String, hint_text: String) -> Panel:
 	var panel := Panel.new()
-	panel.position = Vector2(70, 315)
-	panel.size = Vector2(580, 430)
+	panel.position = Vector2((W - 620.0) * 0.5, 185)
+	panel.size = Vector2(620, 340)
 	var box := VBoxContainer.new()
 	box.name = "Box"
-	box.position = Vector2(36, 34)
-	box.size = Vector2(508, 360)
-	box.add_theme_constant_override("separation", 18)
+	box.position = Vector2(36, 28)
+	box.size = Vector2(548, 286)
+	box.add_theme_constant_override("separation", 14)
 	panel.add_child(box)
 	var title_label := Label.new()
 	title_label.name = "Title"
 	title_label.text = title
 	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title_label.add_theme_font_size_override("font_size", 42)
+	title_label.add_theme_font_size_override("font_size", 40)
 	title_label.add_theme_color_override("font_color", Color("#ffd166"))
 	box.add_child(title_label)
 	var body_label := Label.new()
@@ -425,14 +429,14 @@ func _make_panel(title: String, body: String, hint_text: String) -> Panel:
 	body_label.text = body
 	body_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	body_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	body_label.add_theme_font_size_override("font_size", 25)
+	body_label.add_theme_font_size_override("font_size", 23)
 	body_label.add_theme_color_override("font_color", Color("#e8f7ff"))
 	box.add_child(body_label)
 	var hint := Label.new()
 	hint.name = "Hint"
 	hint.text = hint_text
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint.add_theme_font_size_override("font_size", 23)
+	hint.add_theme_font_size_override("font_size", 22)
 	hint.add_theme_color_override("font_color", Color("#40e0d0"))
 	box.add_child(hint)
 	return panel

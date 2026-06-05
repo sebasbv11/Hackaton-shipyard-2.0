@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://modulos/minijuego_1/scripts/minijuego_1/FaseUno.gd" id="1_faseuno"]
 [ext_resource type="Script" path="res://modulos/minijuego_1/scripts/minijuego_1/Player.gd" id="2_player"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://modulos/minijuego_1/escenas/minijuego_1/concha.tscn" id="5_coin"]
 [ext_resource type="AudioStream" path="res://audio/musica_bote_pesca.wav" id="6_musica_bote"]
 [ext_resource type="Script" path="res://modulos/comun/scripts/audio_loop_player.gd" id="7_audio_loop"]
+[ext_resource type="Script" path="res://modulos/comun/scripts/botones_moviles.gd" id="8_botones_moviles"]
 
 [sub_resource type="RectangleShape2D" id="muro_shape"]
 size = Vector2(40, 900)
@@ -314,7 +315,18 @@ offset_left = 400.0
 offset_top = 692.0
 offset_right = 880.0
 offset_bottom = 718.0
-text = "Toca pantalla / ESPACIO para saltar | Recolecta las 5 gemas de cada zona"
+text = "Boton SALTAR / ESPACIO para saltar | En el aire activa dash"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.65, 0.65, 0.78, 0.75)
+
+[node name="BotonesMoviles" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("8_botones_moviles")
+modo = "minijuego_1_salto"

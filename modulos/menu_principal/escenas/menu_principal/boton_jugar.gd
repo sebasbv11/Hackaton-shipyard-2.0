@@ -8,4 +8,8 @@ func _ready() -> void:
 
 
 func jugar():
+	if has_node("/root/ControladorGlobal"):
+		ControladorGlobal.reiniciar_progreso_minijuegos()
+	if has_node("/root/GameManager"):
+		GameManager.reset()
 	get_tree().change_scene_to_packed(escena_principal)

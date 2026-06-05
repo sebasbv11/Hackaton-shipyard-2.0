@@ -134,7 +134,8 @@ func _ir_al_lobby() -> void:
 	var tw = create_tween()
 	tw.tween_property(fade_overlay, "modulate:a", 1.0, 1.2)
 	await tw.finished
-	get_tree().change_scene_to_file(RUTA_LOBBY)
+	var destino := ControladorGlobal.obtener_destino_tras_completar(1, RUTA_LOBBY)
+	get_tree().change_scene_to_file(destino)
 
 func crear_salpicadura(posicion_x: float) -> void:
 	var salpicadura = ColorRect.new()

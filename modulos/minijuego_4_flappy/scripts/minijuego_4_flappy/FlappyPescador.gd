@@ -211,7 +211,8 @@ func _complete_game() -> void:
 	_play_sfx("success")
 	await get_tree().create_timer(1.4).timeout
 	if is_inside_tree():
-		get_tree().change_scene_to_file(LOBBY_SCENE)
+		var destino := ControladorGlobal.obtener_destino_tras_completar(3, LOBBY_SCENE)
+		get_tree().change_scene_to_file(destino)
 
 func _draw() -> void:
 	_draw_sky()

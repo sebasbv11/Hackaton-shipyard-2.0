@@ -79,4 +79,5 @@ func _volver_al_lobby_luego() -> void:
 
 	ControladorGlobal.nivel = 1
 	ControladorGlobal.muertes = 0
-	get_tree().change_scene_to_file(RUTA_LOBBY)
+	var destino := ControladorGlobal.obtener_destino_tras_completar(2, RUTA_LOBBY)
+	get_tree().change_scene_to_file(destino)

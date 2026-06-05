@@ -1,5 +1,7 @@
 extends Node2D
 
+const RUTA_LOBBY := "res://modulos/lobby/escenas/lobby.tscn"
+
 @onready var titulo: Label = $TituloLabel
 @onready var puntaje: Label = $PuntajeLabel
 @onready var mensaje: Label = $MensajeLabel
@@ -14,10 +16,11 @@ func _ready() -> void:
 	tw.tween_property(fade_overlay, "modulate:a", 0.0, 1.2)
 	await tw.finished
 
-	titulo.text = "Mision Cumplida!"
-	puntaje.text = "Puntaje final: %d" % GameManager.score
-	mensaje.text = _mensaje(GameManager.score)
-	_animar_estrellas(GameManager.score)
+	titulo.text = "Juego completado!"
+	puntaje.text = "Minijuegos completados: 3/3"
+	mensaje.text = "La ruta de Manta esta completa.\nEl muelle, la pesca y el mar celebran tu travesia."
+	boton.text = "Fin"
+	_animar_estrellas(150)
 
 
 func _mensaje(s: int) -> String:
@@ -49,5 +52,8 @@ func _animar_estrellas(s: int) -> void:
 
 
 func _reiniciar() -> void:
+	boton.disabled = true
+	if has_node("/root/ControladorGlobal"):
+		ControladorGlobal.reiniciar_progreso_minijuegos()
 	GameManager.reset()
-	get_tree().change_scene_to_file("res://modulos/minijuego_1/escenas/minijuego_1/intro.tscn")
+	get_tree().change_scene_to_file(RUTA_LOBBY)

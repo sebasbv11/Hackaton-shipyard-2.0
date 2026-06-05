@@ -1,34 +1,47 @@
-# Manta Plataforma Movil
+# Manta Plataforma Movil (Godot 4.6)
 
-Proyecto Godot 4.6 preparado como juego 2D movil en formato vertical.
+Juego 2D en **orientacion horizontal (landscape)** para movil, escritorio y exportacion Android.
 
 ## Probar en Godot
 
 1. Abre Godot 4.6.
 2. Importa esta carpeta: `Hackaton-shipyard-2.0`.
 3. Abre `project.godot`.
-4. Presiona `F5` o el boton de Play.
-5. En la escena principal veras controles tactiles:
-   - Boton izquierdo: caminar a la izquierda.
-   - Boton derecho: caminar a la derecha.
-   - Boton superior derecho: saltar.
+4. Presiona **F5** (Play).
+5. En el editor puedes rotar la ventana de juego a modo horizontal (1280x720).
 
-## Configuracion movil aplicada
+### Controles en juego
 
-- Resolucion base: `720x1280`.
-- Orientacion: vertical.
+| Zona | Accion |
+|------|--------|
+| **Joystick** (esquina inferior izquierda) | Caminar izquierda / derecha |
+| **^ Saltar** (esquina inferior derecha) | Saltar |
+| **OK** (lobby, derecha) | Interactuar con barcos |
+| **SALTAR** (Flappy, derecha) | Impulso / aleteo |
+| Teclado | Flechas o A/D + Espacio |
+
+### Movil en vertical
+
+Si instalas o exportas a Android/iOS y sostienes el telefono en vertical, aparece la pantalla **"Gira tu dispositivo"** (autoload `OrientacionLandscape`) hasta que gires a horizontal.
+
+## Configuracion landscape aplicada
+
+- Resolucion base: **1280x720**.
+- Orientacion: **landscape** (`window/handheld/orientation=0`).
 - Stretch: `canvas_items` con aspecto `expand`.
-- Controles tactiles en `escenas/controles_moviles/`.
-- Menu sin boton de salida visible, porque en movil se usa el boton del sistema.
-- Builds de Windows eliminados.
+- Controles tactiles: `escenas/controles_moviles/` (joystick + botones en esquinas).
+- Overlay de rotacion: `scripts/orientacion_landscape.gd` (autoload).
 
 ## Exportar a Android
 
-1. En Godot ve a `Editor > Editor Settings > Export > Android`.
-2. Configura Android SDK, JDK y build tools.
-3. Ve a `Project > Export`.
-4. Agrega un preset `Android`.
-5. Exporta como `.apk` para prueba o `.aab` para publicacion.
+1. En Godot: `Editor > Editor Settings > Export > Android` (SDK, JDK, build tools).
+2. `Project > Export` → preset **Android**.
+3. En el preset Android, pestana **Screen**:
+   - Orientacion: **Landscape** o **Sensor Landscape**.
+4. Exporta `.apk` (prueba) o `.aab` (publicacion).
 
-Si Godot pide export templates, instalalos desde:
-`Editor > Manage Export Templates`.
+Si Godot pide plantillas: `Editor > Manage Export Templates`.
+
+## Version web (opcional)
+
+La carpeta tambien incluye `index.html` + `js/` como PWA landscape independiente. No se ejecuta dentro de Godot; sirve para probar en navegador con `npx serve .`.

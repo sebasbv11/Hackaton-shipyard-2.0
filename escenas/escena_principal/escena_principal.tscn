@@ -28,13 +28,12 @@ bus = &"Musica"
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ContadorMuertes" parent="CanvasLayer" instance=ExtResource("6_px6n3")]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.0
-offset_top = 16.825
+anchors_preset = 0
+offset_left = 0.0
+offset_top = 0.0
 offset_right = 0.0
-offset_bottom = 16.825
+offset_bottom = 0.0
+grow_horizontal = 1
 grow_vertical = 1
 
 [node name="ControlesMoviles" parent="CanvasLayer" instance=ExtResource("9_controles")]

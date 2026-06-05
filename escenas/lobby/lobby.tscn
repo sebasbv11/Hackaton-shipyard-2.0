@@ -9,7 +9,7 @@ animacion = NodePath("Jugador/Animacion")
 mensaje = NodePath("CanvasLayer/Panel/Mensaje")
 
 [node name="Jugador" type="Node2D" parent="."]
-position = Vector2(360, 1030)
+position = Vector2(640, 598)
 
 [node name="Animacion" type="AnimatedSprite2D" parent="Jugador"]
 texture_filter = 1
@@ -22,10 +22,10 @@ scale = Vector2(3, 3)
 [node name="Panel" type="Panel" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 24.0
-offset_top = 28.0
-offset_right = -24.0
-offset_bottom = 174.0
+offset_left = 140.0
+offset_top = 12.0
+offset_right = -140.0
+offset_bottom = 108.0
 grow_horizontal = 2
 
 [node name="Titulo" type="Label" parent="CanvasLayer/Panel"]

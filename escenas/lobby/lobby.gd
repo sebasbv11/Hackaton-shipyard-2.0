@@ -3,42 +3,44 @@ extends Node2D
 const ACTION_LEFT := "izquierda"
 const ACTION_RIGHT := "derecha"
 const ACTION_JUMP := "saltar"
+const VIEW_W := 1280.0
+const VIEW_H := 720.0
 
 @export var ruta_minijuego_2 := "res://escenas/escena_principal/escena_principal.tscn"
 @export var ruta_minijuego_3 := "res://escenas/minijuego_3_flappy/FlappyPescador.tscn"
 @export var animacion: AnimatedSprite2D
 @export var mensaje: Label
 
-var _player_position := Vector2(360.0, 1030.0)
+var _player_position := Vector2(640.0, 598.0)
 var _velocity := Vector2.ZERO
-var _speed := 260.0
-var _jump_speed := -560.0
+var _speed := 280.0
+var _jump_speed := -520.0
 var _gravity := 1500.0
-var _ground_y := 1030.0
+var _ground_y := 598.0
 var _facing_left := false
 var _active_boat := -1
 var _boats := [
-	{"id": 1, "x": 145.0, "title": "Minijuego 1", "status": "Pendiente"},
-	{"id": 2, "x": 360.0, "title": "Plataforma", "status": "Disponible"},
-	{"id": 3, "x": 575.0, "title": "Flappy", "status": "Disponible"}
+	{"id": 1, "x": 280.0, "title": "Minijuego 1", "status": "Pendiente"},
+	{"id": 2, "x": 640.0, "title": "Plataforma", "status": "Disponible"},
+	{"id": 3, "x": 1000.0, "title": "Flappy", "status": "Disponible"}
 ]
-var _pressed_actions := {}
+var _controles: Control
 
 
 func _ready() -> void:
 	if is_instance_valid(animacion):
 		animacion.play("idle")
-		animacion.scale = Vector2(3.0, 3.0)
+		animacion.scale = Vector2(2.6, 2.6)
 		_update_player_visual()
 	if is_instance_valid(mensaje):
-		mensaje.text = "Camina al barco 2 y toca OK para entrar al minijuego 2."
-	_create_mobile_controls()
+		mensaje.text = "Camina al barco 2 y pulsa OK para entrar al minijuego 2."
+	_spawn_controls()
 
 
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis(ACTION_LEFT, ACTION_RIGHT)
 	_velocity.x = direction * _speed
-	_player_position.x = clampf(_player_position.x + _velocity.x * delta, 54.0, 666.0)
+	_player_position.x = clampf(_player_position.x + _velocity.x * delta, 80.0, VIEW_W - 80.0)
 
 	if direction < 0.0:
 		_facing_left = true
@@ -71,23 +73,23 @@ func _draw() -> void:
 
 
 func _draw_background() -> void:
-	draw_rect(Rect2(Vector2.ZERO, Vector2(720.0, 1280.0)), Color("#79d5ee"))
-	draw_rect(Rect2(0.0, 360.0, 720.0, 920.0), Color("#147fa4"))
-	for i in range(18):
-		var y := 390.0 + float(i) * 42.0 + sin(Time.get_ticks_msec() / 450.0 + i) * 5.0
-		draw_rect(Rect2(0.0, y, 720.0, 6.0), Color(0.70, 0.95, 1.0, 0.25))
-	draw_rect(Rect2(0.0, 825.0, 720.0, 28.0), Color("#e0bd77"))
-	draw_rect(Rect2(0.0, 853.0, 720.0, 16.0), Color("#8c5429"))
+	draw_rect(Rect2(Vector2.ZERO, Vector2(VIEW_W, VIEW_H)), Color("#79d5ee"))
+	draw_rect(Rect2(0.0, 180.0, VIEW_W, VIEW_H - 180.0), Color("#147fa4"))
+	for i in range(22):
+		var y := 210.0 + float(i) * 28.0 + sin(Time.get_ticks_msec() / 450.0 + i) * 4.0
+		draw_rect(Rect2(0.0, y, VIEW_W, 5.0), Color(0.70, 0.95, 1.0, 0.22))
+	draw_rect(Rect2(0.0, 520.0, VIEW_W, 22.0), Color("#e0bd77"))
+	draw_rect(Rect2(0.0, 542.0, VIEW_W, 12.0), Color("#8c5429"))
 
 
 func _draw_dock() -> void:
-	draw_rect(Rect2(0.0, 885.0, 720.0, 240.0), Color("#7d4b28"))
-	for x in range(0, 720, 72):
-		draw_rect(Rect2(float(x), 885.0, 56.0, 240.0), Color("#a46535"))
-		draw_rect(Rect2(float(x) + 56.0, 885.0, 6.0, 240.0), Color("#503018"))
-	for x in range(44, 720, 150):
-		draw_rect(Rect2(float(x), 820.0, 22.0, 300.0), Color("#533018"))
-		draw_rect(Rect2(float(x) - 8.0, 806.0, 38.0, 16.0), Color("#332012"))
+	draw_rect(Rect2(0.0, 554.0, VIEW_W, VIEW_H - 554.0), Color("#7d4b28"))
+	for x in range(0, int(VIEW_W), 88):
+		draw_rect(Rect2(float(x), 554.0, 68.0, VIEW_H - 554.0), Color("#a46535"))
+		draw_rect(Rect2(float(x) + 68.0, 554.0, 6.0, VIEW_H - 554.0), Color("#503018"))
+	for x in range(60, int(VIEW_W), 180):
+		draw_rect(Rect2(float(x), 510.0, 18.0, 210.0), Color("#533018"))
+		draw_rect(Rect2(float(x) - 6.0, 498.0, 30.0, 14.0), Color("#332012"))
 
 
 func _draw_boats() -> void:
@@ -95,17 +97,17 @@ func _draw_boats() -> void:
 		var x: float = boat.x
 		var active := int(boat.id) == _active_boat
 		var hull_color := Color("#f4a261") if active else Color("#7a3f24")
-		draw_rect(Rect2(x - 78.0, 585.0, 156.0, 34.0), hull_color)
-		draw_rect(Rect2(x - 60.0, 548.0, 120.0, 42.0), Color("#b45f2b"))
-		draw_rect(Rect2(x - 40.0, 506.0, 80.0, 56.0), Color("#e8c37a"))
-		draw_rect(Rect2(x - 5.0, 428.0, 10.0, 100.0), Color("#4d2d18"))
+		draw_rect(Rect2(x - 70.0, 430.0, 140.0, 30.0), hull_color)
+		draw_rect(Rect2(x - 54.0, 398.0, 108.0, 38.0), Color("#b45f2b"))
+		draw_rect(Rect2(x - 36.0, 362.0, 72.0, 48.0), Color("#e8c37a"))
+		draw_rect(Rect2(x - 4.0, 292.0, 8.0, 88.0), Color("#4d2d18"))
 		var sail_color := Color("#f4e4bc") if int(boat.id) == 2 else Color("#d94f3d")
 		draw_polygon(
-			PackedVector2Array([Vector2(x + 8.0, 438.0), Vector2(x + 78.0, 478.0), Vector2(x + 8.0, 520.0)]),
+			PackedVector2Array([Vector2(x + 6.0, 300.0), Vector2(x + 68.0, 334.0), Vector2(x + 6.0, 368.0)]),
 			PackedColorArray([sail_color, sail_color, sail_color])
 		)
-		draw_string(ThemeDB.fallback_font, Vector2(x - 54.0, 670.0), str(boat.title), HORIZONTAL_ALIGNMENT_LEFT, 120.0, 24, Color.WHITE)
-		draw_string(ThemeDB.fallback_font, Vector2(x - 42.0, 700.0), str(boat.status), HORIZONTAL_ALIGNMENT_LEFT, 100.0, 18, Color("#f4e4bc"))
+		draw_string(ThemeDB.fallback_font, Vector2(x - 48.0, 488.0), str(boat.title), HORIZONTAL_ALIGNMENT_LEFT, 120.0, 20, Color.WHITE)
+		draw_string(ThemeDB.fallback_font, Vector2(x - 38.0, 512.0), str(boat.status), HORIZONTAL_ALIGNMENT_LEFT, 100.0, 16, Color("#f4e4bc"))
 
 
 func _update_player_visual() -> void:
@@ -134,17 +136,17 @@ func _update_active_boat() -> void:
 			closest_distance = distance
 			closest = int(boat.id)
 
-	_active_boat = closest if closest_distance <= 96.0 else -1
+	_active_boat = closest if closest_distance <= 88.0 else -1
 	if not is_instance_valid(mensaje):
 		return
 	if _active_boat == 2:
-		mensaje.text = "Barco 2: toca OK para entrar al minijuego 2."
+		mensaje.text = "Barco 2: pulsa OK para entrar al minijuego 2."
 	elif _active_boat == 1:
 		mensaje.text = "Barco 1: minijuego 1 pendiente."
 	elif _active_boat == 3:
-		mensaje.text = "Barco 3: toca OK para entrar a Flappy Pescador."
+		mensaje.text = "Barco 3: pulsa OK para entrar a Flappy Pescador."
 	else:
-		mensaje.text = "Camina al barco 2 y toca OK para entrar al minijuego 2."
+		mensaje.text = "Camina al barco 2 y pulsa OK para entrar al minijuego 2."
 
 
 func _interact() -> void:
@@ -156,48 +158,14 @@ func _interact() -> void:
 		mensaje.text = "Ese barco aun no tiene minijuego conectado."
 
 
-func _create_mobile_controls() -> void:
+func _spawn_controls() -> void:
+	var scene := preload("res://escenas/controles_moviles/controles_moviles.tscn")
+	_controles = scene.instantiate()
+	_controles.show_interact = true
+	_controles.interact_label = "OK"
+	_controles.interact_pressed.connect(_interact)
 	var layer := CanvasLayer.new()
 	layer.name = "ControlesLobby"
+	layer.layer = 10
+	layer.add_child(_controles)
 	add_child(layer)
-
-	_add_hold_button(layer, "Izquierda", "<", ACTION_LEFT, Vector2(32.0, 1110.0), Vector2(120.0, 100.0))
-	_add_hold_button(layer, "Derecha", ">", ACTION_RIGHT, Vector2(172.0, 1110.0), Vector2(120.0, 100.0))
-	_add_hold_button(layer, "Saltar", "^", ACTION_JUMP, Vector2(548.0, 1095.0), Vector2(120.0, 100.0))
-
-	var ok := Button.new()
-	ok.name = "Interactuar"
-	ok.text = "OK"
-	ok.focus_mode = Control.FOCUS_NONE
-	ok.position = Vector2(395.0, 1110.0)
-	ok.size = Vector2(120.0, 100.0)
-	ok.add_theme_font_size_override("font_size", 34)
-	ok.pressed.connect(_interact)
-	layer.add_child(ok)
-
-
-func _add_hold_button(parent: Node, node_name: String, label: String, action: String, position: Vector2, size: Vector2) -> void:
-	var button := Button.new()
-	button.name = node_name
-	button.text = label
-	button.focus_mode = Control.FOCUS_NONE
-	button.position = position
-	button.size = size
-	button.add_theme_font_size_override("font_size", 34)
-	button.button_down.connect(func() -> void: _press_action(action))
-	button.button_up.connect(func() -> void: _release_action(action))
-	parent.add_child(button)
-
-
-func _press_action(action: String) -> void:
-	if _pressed_actions.has(action):
-		return
-	_pressed_actions[action] = true
-	Input.action_press(action)
-
-
-func _release_action(action: String) -> void:
-	if not _pressed_actions.has(action):
-		return
-	_pressed_actions.erase(action)
-	Input.action_release(action)

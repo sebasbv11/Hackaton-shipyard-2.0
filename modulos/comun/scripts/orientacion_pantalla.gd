@@ -36,10 +36,11 @@ func _actualizar_orientacion() -> void:
 
 	_ruta_actual = ruta
 	_requiere_horizontal = _es_horizontal(ruta)
-	if _requiere_horizontal:
-		DisplayServer.screen_set_orientation(DisplayServer.SCREEN_SENSOR_LANDSCAPE)
-	else:
-		DisplayServer.screen_set_orientation(DisplayServer.SCREEN_SENSOR_PORTRAIT)
+	if _es_dispositivo_movil():
+		if _requiere_horizontal:
+			DisplayServer.screen_set_orientation(DisplayServer.SCREEN_SENSOR_LANDSCAPE)
+		else:
+			DisplayServer.screen_set_orientation(DisplayServer.SCREEN_SENSOR_PORTRAIT)
 
 
 func _es_horizontal(ruta: String) -> bool:
@@ -111,5 +112,12 @@ func _crear_aviso_giro() -> void:
 func _actualizar_aviso_giro() -> void:
 	if _panel_aviso == null:
 		return
+	if not _es_dispositivo_movil():
+		_panel_aviso.visible = false
+		return
 	var tamano := get_viewport().get_visible_rect().size
 	_panel_aviso.visible = _requiere_horizontal and tamano.y > tamano.x
+
+
+func _es_dispositivo_movil() -> bool:
+	return OS.has_feature("mobile") or OS.has_feature("android") or OS.has_feature("ios")
